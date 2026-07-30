@@ -1,12 +1,12 @@
 ---
 name: capture-learning
-description: Capture a concept just explained/discussed in the current session into the project's paired learning-resource location (a cheat sheet entry, and optionally an exercise) — durable, not left in chat. Use when the user hits something they don't understand in real code, asks to "add this to the cheat sheet", wants to remember an explanation for later, or a comprehension gap comes up mid-session. Not stack-specific — works for any project paired with any learning location (Lua/Love2D playground, a Go playground, a consolidated docs repo, etc).
+description: Capture a concept just explained/discussed in the current session into the project's paired learning-resource location (a cheat sheet entry, and optionally an exercise) — durable, not left in chat. Use when the user hits something they don't understand in real code, asks to "add this to the cheat sheet", wants to remember an explanation for later, or a comprehension gap comes up mid-session. Not stack-specific — works for any project paired with any learning location (a language-specific playground, a consolidated docs repo, etc).
 ---
 
 # Capture Learning
 
 Turns an in-session explanation into a durable artifact in whatever learning-resource
-location is paired with the *current* project — never assume Lua, LÖVE, or any specific
+location is paired with the *current* project — never assume any specific stack or
 repo name. Discover everything about the target from its own docs each time.
 
 ## 1. Find the paired learning-resource location
