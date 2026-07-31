@@ -47,3 +47,46 @@ was derived from; substitute equivalents in any corpus with real history.
 ## Friction log
 
 <!-- newest first; date each entry -->
+
+### 2026-07-31 — pre-run: the write-boundary gap (raised by the human, before the first run)
+
+**The human asked for a prompt telling the cartographer not to update
+`STATUS.md`, then asked the right follow-up: *"is that something we'll have to be
+careful about every time, or is it just for this repo?"***
+
+**It is general, and needing to say it by hand is the gap.**
+
+**The collision, stated generally:** the index declares itself *"the mandatory
+entry point"*. **Most established domains already have one** — a `STATUS.md`, a
+README, a wiki homepage, an ADR index, a runbook. So on arrival the cartographer
+meets an incumbent entry point it was not told about, and **two authoritative
+entry points is the exact failure this skill exists to prevent.** It will be
+tempted to fix that by absorbing or rewriting the incumbent.
+
+⇒ **§1 must ask a question it currently does not:** is there already a
+human-facing entry point here, and is the index **replacing** it, **feeding** it,
+or **living beside** it? All three are legitimate; silently picking one is not.
+
+**`capture-learning` already solves this and the mapping skills copied only half
+of it.** It has two pieces we lack:
+
+1. **A resolved *and persisted* target** (`capture-learning` §1): check
+   `CLAUDE.md` → `bd recall learning-resource-location` → else ask, **and write
+   the answer back with `bd remember`**. Ours says "ask where the map lives" —
+   which re-asks every single run and never learns.
+2. **An explicit negative write boundary** (`capture-learning` line 76):
+   > *"Never touch the current project's own source — this skill only writes to
+   > the paired learning-resource location."*
+
+**(2) is the whole answer to the human's question.** With that rule, "don't touch
+`STATUS.md`" needs no prompt in any repo, because the skill only ever writes to
+the map. **Without it, every run needs a hand-written guard, in every domain** —
+and the one time it is forgotten, the skill edits the artefact the human relies
+on. `surveyor` and `visualiser` need the same rule; `visualiser` most of all,
+since renders are the easiest thing to scatter into a repo.
+
+⚠ **Not implemented — deliberately.** Doing it now would change the skill
+between drafting it and first running it, and the first run is the only clean
+observation we get of the drafted version. **Watch what it actually does about
+`STATUS.md` on run 1**, then implement. If it asks unprompted, the gap is smaller
+than it looks.
