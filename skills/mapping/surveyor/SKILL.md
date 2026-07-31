@@ -41,9 +41,20 @@ write records it cannot read.
 
 ## 2. Ask what is already known before gathering anything
 
-Check the existing index for the areas your direction touches, and note their
-resolution. **Re-surveying ground already covered at sufficient resolution is
-the single most common waste.**
+Check the existing index for the areas your direction touches. **It tells you two
+opposite things, and you need both.**
+
+- **What to skip.** Note each area's `resolution`. **Re-surveying ground already
+  covered at sufficient resolution is the single most common waste.**
+- 🛑 **What to re-check.** Note each entry's `volatility` and `last_checked`.
+  **A `live` claim needs re-surveying *because* it was surveyed before** — an
+  open-issue count, a backlog figure, a "currently failing" list. Re-checking a
+  volatile claim is not waste; it is the only thing keeping the map honest.
+
+**Build both lists before gathering anything: the skip list and the re-check
+list.** A survey that only ever adds new subjects lets the map fill with
+confident stale numbers that still carry perfect provenance — which is the
+precise defect this whole format exists to prevent.
 
 Then ask the two questions that repeatedly turn out to matter:
 

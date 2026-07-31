@@ -268,3 +268,31 @@ emits none** — claims are anonymous bullets under `claims:`. Either the survey
 starts emitting stable ids, or the cartographer mints them at ingest and says so.
 **Currently neither is written down.** Full note, with two other v1 contract
 holes and what to watch on run 1: `../cartographer/NOTES.md`.
+
+### 2026-07-31 — §2 only knew how to skip, not how to re-check (raised by the human)
+
+**The human asked whether the index-reading design means future surveys "only
+surface new things."** Half yes — and the missing half was a hole.
+
+§2 said only: note the `resolution`, don't re-survey what is covered. **That is
+the skip list.** But the record schema carries `volatility: static | slow | live`
+and the index carries `last_checked`, and **nothing told the surveyor to use
+them.** A `live` claim — an open-issue count, a backlog figure — needs
+re-surveying *precisely because* it was surveyed before.
+
+⇒ ✅ **FIXED same day. §2 now says the index tells you two opposite things, and
+requires both a skip list and a re-check list before gathering.**
+
+**The loop was broken at the other end too, and this is the part worth
+remembering:** `visualiser` §6 already reports *"`live` claims whose
+`last_checked` is old, because a diagram makes a stale number look freshly
+true."* So the visualiser could *detect* staleness while the surveyor — **the
+only one of the three that can actually go and re-check** — had no instruction to
+act on it. **A three-skill loop where the detector and the fixer never
+connect.**
+
+⚠ **Fixed rather than observed, deliberately, and the rule is now explicit:
+defer-to-observe only when run 1 can actually observe it.** Run 1 is a single
+compile with no prior index and no second survey, so nothing here was testable —
+deferring would have been pure delay. Contrast the claim-id gap in
+`../cartographer/NOTES.md`, which run 1 *will* exercise.
