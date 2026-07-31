@@ -1,0 +1,148 @@
+---
+name: cartographer
+description: Compile survey records into a map — an append-only body of claims plus a mutable, authoritative index that resolves a topic to the current claim, tracks resolution per area, and marks contested findings. Use when survey records need turning into a map, when a map's index needs bringing current, when findings have accumulated and nobody can tell which are still true, or when a long document has begun superseding itself.
+maturity: draft
+---
+
+# Cartographer
+
+**Speaks map format v1.** Consumes survey records from `surveyor`. Produces the
+map and its index. Renders nothing — that is `visualiser`.
+
+You are the drawing office. Field parties took the measurements; you decide what
+the map says, which claims are current, and where the map is thin.
+
+## The map is three things with different rules
+
+| Part | Mutability | Purpose |
+|---|---|---|
+| **Claims** | **Append-only, immutable** | What was found, with provenance. Never edited, never deleted |
+| **Index** | **Mutable, authoritative** | Topic → the *current* claim. The mandatory entry point |
+| **Areas** | Mutable | The territory, each carrying a **resolution** |
+
+🛑 **Supersession is an index operation.** A later claim that overturns an
+earlier one does not edit or delete it. The claim stays; the *index entry* is
+repointed. The reasoning trail survives and only the answer moves.
+
+This exists because a long body of claims supersedes itself, and **a stale claim
+with correct provenance passes every other check anyone could apply to it.**
+Searching returns whatever matched first; the index returns what is true now.
+
+## 1. Read before writing
+
+- Ask where the map lives. **Read that location's own `CLAUDE.md` / `README.md`
+  every run** — domain conventions belong to the domain, not to this skill.
+- **Read the existing index in full** before ingesting anything. You cannot
+  detect supersession against a map you have not read.
+- **If the map declares a format version other than v1, stop and say so.**
+- Note the **direction** the records were surveyed against. If it differs from
+  the map's recorded direction, say so before compiling — the survey may need
+  re-firing rather than merging.
+
+## 2. Ingest each record
+
+For every claim in every record, decide which of these it is:
+
+| Case | Action |
+|---|---|
+| **New** — no index entry for this topic | Append the claim. Create an index entry |
+| **Corroborates** — agrees with the current claim | Append. Add it as supporting evidence; leave the entry pointed where it is |
+| **Supersedes** — later, better-grounded, and incompatible | Append. **Repoint the index.** Record what it superseded and why |
+| **Contests** — incompatible, and you cannot honestly say which wins | Append. **Mark the entry `contested` and point at both.** See below |
+| **Raises resolution** — same area, more detail | Append. Update the area's resolution level |
+
+### 🛑 `contested` is a first-class state, not a failure
+
+If two claims disagree and the evidence does not settle it, **the index must say
+so and name both**. Forcing a single current answer manufactures confidence in
+exactly the case where the map knows it is unresolved — and that is the most
+dangerous entry a map can contain.
+
+An entry may also be `contested` when one claim is `[source]` and another is
+`[inferred]` but from a later, better-informed position. Record the tension;
+do not launder it.
+
+## 3. Prefer the better-grounded claim, not the later one
+
+Supersession is **not** chronology. When deciding which claim is current:
+
+1. **Grounding wins**: `[source]` over `[docs]` over `[inferred]`.
+2. **Then tier**: a T4/T3 claim beats a T1 claim about the same thing.
+3. **Then recency**, and only then.
+
+A recent `[inferred]` claim does not supersede an older `[source]` one. If it
+appears to, that is a `contested` entry, not a repoint.
+
+## 4. The index entry — map format v1
+
+```yaml
+topic: <the question someone would actually ask>
+status: current | contested
+current: <claim-id>            # or, when contested:
+contested_between: [<claim-id>, <claim-id>]
+area: <which area of the map this sits in>
+resolution: R0 | R1 | R2 | R3
+volatility: static | slow | live
+last_checked: <YYYY-MM-DD>
+supersedes:
+  - claim: <claim-id>
+    reason: <why it stopped being current>
+```
+
+**Key entries by the question, not by the document.** *"What is the build
+route?"* is a topic; *"F010"* is not. Staleness happens at claim level, so an
+index keyed by document cannot repoint at the granularity where the problem
+lives.
+
+## 5. Keep the areas honest
+
+For every area the map covers, record its resolution and **draw blank as blank**.
+An unmapped area gets a boundary and no content — omitting it entirely reads as
+"there is nothing there", which is a claim nobody made.
+
+Maintain a short list of **thin areas**: where the direction needs more than the
+current resolution supplies. That list is what tells the user whether to re-run
+the surveyor, and it is one of the most useful things the map produces.
+
+## 6. Volatility is per claim, not per source
+
+Two claims from the same source on the same day can decay at completely
+different rates — a live count and a closed historical record. Carry
+`volatility` on the claim and surface `live` entries whose `last_checked` is old
+**before** anyone quotes them.
+
+## 7. The read-back gate — do not skip this
+
+🛑 **Adherence fails under context pressure; verification catches it.** A
+followed protocol still produces a bad map at the end of a long session.
+
+Before finishing, **re-read the index you have just written, cold, as if you had
+not been present**, and check:
+
+- Does it answer the **direction**? If not, say so explicitly.
+- Does every entry resolve to a claim that exists?
+- Is any entry `current` where the evidence is genuinely contested?
+- Would someone entering here be sent to the newest claim on each topic?
+- Is anything asserted in your summary that is **not written in a file**? If it
+  matters after this turn, it goes in the map — not in the reply.
+
+## 8. Rules
+
+1. **Claims are append-only.** Supersede by repointing the index; never edit or
+   delete a claim.
+2. **The index is the entry point.** When answering from the map, look up the
+   topic — never conclude from a search across claims.
+3. **Never smooth over a gap.** "Not determined", plus what would resolve it.
+4. **Every claim keeps its grounding, tier, provenance and accessed date**
+   through compilation. Compiling never strips provenance.
+5. **Two records disagreeing about the same subject is a finding**, not a merge
+   conflict. Surface it; it is one of the main things compilation is for.
+6. **Compile what exists before asking for more.** Re-reading material already
+   collected outperforms new collection often enough to be a gate.
+
+## 9. Hand over
+
+Report in a few lines: what was compiled, what changed status, what is now
+`contested`, which areas are thin, and what the direction still cannot answer.
+
+If the user needs to *see* the map rather than read it, that is `visualiser`.
