@@ -89,6 +89,13 @@ Keep diagrams readable rather than complete. **A diagram that shows everything
 shows nothing** — if a view needs more than roughly a dozen nodes, split it by
 area and say how the pieces join.
 
+🛑 **Write only to the map location** (or to an artifact). **Never edit the
+domain's own documents or source** — do not drop diagrams into a README, a status
+page or a findings file because they would look good there. **Renders scatter
+more easily than any other output**, and a diagram pasted into a document nobody
+re-renders becomes a confident stale picture the moment the index moves. Offer
+the human the file; let them place it.
+
 ## 6. Report what you could not draw
 
 Finish by naming, in a line or two:

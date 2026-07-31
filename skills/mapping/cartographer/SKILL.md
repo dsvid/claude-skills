@@ -30,8 +30,29 @@ Searching returns whatever matched first; the index returns what is true now.
 
 ## 1. Read before writing
 
-- Ask where the map lives. **Read that location's own `CLAUDE.md` / `README.md`
-  every run** — domain conventions belong to the domain, not to this skill.
+- Ask where the map lives, **and record the answer in that location's own
+  `README.md`** so the next run reads it instead of re-asking.
+- **Read that location's own `CLAUDE.md` / `README.md` every run** — domain
+  conventions belong to the domain, not to this skill.
+
+### 🛑 There is probably already an entry point. Ask before you become one
+
+The index below calls itself the mandatory entry point. **Most established
+domains already have one** — a `STATUS.md`, a README, a wiki homepage, an ADR
+index, a runbook — and **two authoritative entry points is the exact failure this
+skill exists to prevent.**
+
+So do not resolve that silently. Ask which of three this is, and write the answer
+into the map location's `README.md`:
+
+| | The index… |
+|---|---|
+| **Replaces** | The incumbent is retired or becomes a pointer to the index |
+| **Feeds** | The incumbent stays authoritative for humans; the index is compiled *into* it, by the human or on request |
+| **Beside** | Both stand, for different audiences. **Then say plainly which one wins on a disagreement** |
+
+**All three are legitimate. Picking one without asking is not** — and note that
+the incumbent is usually the artefact the human actually relies on day to day.
 - **Read the existing index in full** before ingesting anything. You cannot
   detect supersession against a map you have not read.
 - **If the map declares a format version other than v1, stop and say so.**
@@ -139,6 +160,12 @@ not been present**, and check:
    conflict. Surface it; it is one of the main things compilation is for.
 6. **Compile what exists before asking for more.** Re-reading material already
    collected outperforms new collection often enough to be a gate.
+7. 🛑 **Write only to the map location. Never edit the domain's own documents or
+   source** — not the README you read for conventions, not the status page, not
+   the findings the records were compiled from, however stale they look. **Report
+   what is stale; let the human change it.** Compiling a map must never mutate
+   the territory it describes, and the artefacts you are most tempted to correct
+   are the ones the human relies on most.
 
 ## 9. Hand over
 

@@ -85,8 +85,27 @@ and the one time it is forgotten, the skill edits the artefact the human relies
 on. `surveyor` and `visualiser` need the same rule; `visualiser` most of all,
 since renders are the easiest thing to scatter into a repo.
 
-⚠ **Not implemented — deliberately.** Doing it now would change the skill
-between drafting it and first running it, and the first run is the only clean
-observation we get of the drafted version. **Watch what it actually does about
-`STATUS.md` on run 1**, then implement. If it asks unprompted, the gap is smaller
-than it looks.
+✅ **IMPLEMENTED same day, in all three skills** — the human overruled my
+"wait and observe", correctly.
+
+- `cartographer` §1 — a new subsection: *there is probably already an entry
+  point, ask before you become one*, with the replaces / feeds / beside table,
+  and the answer written into the map location's `README.md`.
+- `cartographer` §8 rule 7, `surveyor` §6 rule 7, `visualiser` §5 — **write only
+  to the map location; never edit the domain's own documents or source.**
+- `cartographer` §1 also now **persists the map location** rather than re-asking
+  every run.
+
+⚠ **My reason for deferring was bad and is worth recording as a method note.** I
+argued the first run was "the only clean observation of the drafted version". But
+the observation at stake was merely *does it ask unprompted about `STATUS.md`* —
+low value — while the downside was **it edits the human's day-7 skim target**.
+I had also already changed `surveyor`'s `SKILL.md` before its own first run
+without the same hesitation. **"Preserve the experiment" is a good instinct that
+was pointed at a worthless experiment**; the cost of being wrong was asymmetric
+and I did not weigh it.
+
+**Not implemented:** `capture-learning`'s persistence *mechanism*
+(`bd remember` / `bd recall`). That is a tool dependency the mapping skills
+should not assume; writing the answer into the map location's own `README.md` is
+the portable equivalent and is what §1 now says.

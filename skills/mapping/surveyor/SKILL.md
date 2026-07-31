@@ -204,6 +204,12 @@ operation and the input artefacts, or it is not reproducible.
    it will cost before starting it.
 6. **`unexpected` is not optional.** The thing noticed while chasing something
    else is often worth more than the thing you were sent for.
+7. 🛑 **Write only to the map location. Never edit the domain's own documents or
+   source** — surveying must not mutate the territory. You will find stale,
+   wrong and superseded material; **that is a record to emit, not a thing to
+   fix.** The artefacts you are most tempted to correct are the ones the human
+   relies on most, and a survey that quietly rewrites its own subject has
+   destroyed the evidence for its own findings.
 
 ## 7. Hand over
 
