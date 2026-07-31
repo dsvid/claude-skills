@@ -61,11 +61,55 @@ For anything more than a couple of subjects, dispatch **one sub-agent per
 subject**. They work independently and return a bounded record; you stay
 uncluttered enough to compile.
 
-**Every sub-agent gets the direction verbatim.** They start cold — the direction
-is what makes their independent work coherent, and without it they will report
-what is interesting rather than what is relevant.
+**Group by arc, not strictly by document.** The unit is whatever must be read
+*together and in order* to be understood — a set of findings written across one
+investigation, a thread and the code it argues about. Splitting an arc forces
+every agent to re-read the others for context; that is the most common way a
+fan-out costs more than it saves.
 
-Give each one the record schema below and require it back in that shape.
+### Write the brief to a file
+
+Put the direction, the record schema, the tiers, and the rules in **one file**,
+and have every sub-agent read it first. Then each dispatch prompt carries only
+the assignment.
+
+**Every sub-agent gets the direction verbatim** — that is what the shared file
+guarantees. They start cold, and without the direction they will report what is
+interesting rather than what is relevant.
+
+### Choose the model before dispatching
+
+**Sub-agents inherit your model unless the dispatch overrides it**, so an
+expensive session silently fans out expensive agents. Most of the sub-agent job
+is extraction against a fixed schema, and does not need the model doing the
+compiling.
+
+**Ask which model to fan out on, and default to Sonnet.** Ask *here*, not at
+§0 — only now do you know the fan-out width, so only now can you price it
+("14 subjects across ~40 documents"). Below the fan-out threshold, skip the
+question. If the user has said "just go", take the default without a round trip.
+
+**If the chosen model is unavailable, fall back to your own, say so in one line,
+and continue.** Never fail a survey over a model choice.
+
+### Bound what comes back
+
+Sub-agents **write their records to disk and return a summary, not the records**.
+Returning both spends the corpus twice and clutters exactly the context the
+fan-out exists to protect.
+
+Require back, in ~15 lines: where the records were written, counts by status, and
+**only the exceptions** — what is contested, what could not be determined, what
+was unexpected. Everything else is in the file, and you can read it if you need it.
+
+### Give each one a scope, and mean it
+
+Say **which material is theirs and that the rest belongs to other agents.**
+Without that, sub-agents read the whole corpus "for context" — n agents each
+reading everything is the worst case, and it is the default behaviour.
+
+They may follow a reference out of their assignment to resolve a specific
+question. They may not go and read around.
 
 **Follow references; do not browse.** Survey what the material actually points
 at — what the code imports, what the docs cite, what the issues link. A
