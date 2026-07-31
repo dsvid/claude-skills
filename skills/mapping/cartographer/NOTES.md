@@ -190,3 +190,122 @@ scoring. **A manufactured instance is not evidence.**
 11 traps and 6 contested claims before any compile ran (`surveyor/NOTES.md`,
 first dogfood entry). **If the compile adds nothing on top of
 `/map/survey/README.md`, that is the answer.**
+
+---
+
+## First compile result — 2026-07-31 (s011, cold session)
+
+Run against `/map/survey/*.yaml` (24 records, 296 claims) in a session that had
+read only the s010 log, `questions/README.md`, `_direction.md` and the survey
+README before starting. The five checks were pre-registered in
+`sessions/010-…:116-131`. Answered here with what happened, not what should have.
+
+### Check 1 — did it beat the survey report?
+
+**Yes. Three items, of which one is a class the survey could not have found.**
+
+- **J1 — a LIVE claim recorded as DEAD.** `questions/README.md`:483 states
+  "F009 Claim 1's 'class, not single title' is REFUTED". F009 Claim 1 is
+  "#480 conflates a fixed regression with an unfixed baseline defect", is on
+  F009's own survivor list, and `STATUS.md`:842 still relies on it as live. The
+  refuted text is F009's Q8.1 *bearing statement* plus Claim 3. **The two repo
+  files now contradict each other about one claim's status.**
+  The survey report has all the parts (`f009#4` says the parent brief's framing
+  is wrong) but never joins them, and never names `questions/README.md`:483 —
+  its trap table T1 flags a *different* defect on a *different* line of that file.
+- 🔥 **This is the inverse of the survey's whole trap class.** T1–T11 are all
+  *dead claims reading as live*. This is a *live claim reading as dead* — and
+  **"read forward" is what produces it.** A discipline that resolves every
+  conflict in favour of the later document manufactures this error whenever the
+  later document misnumbers. The surveyor's direction cannot catch it; the
+  index can, because the index is keyed by claim and must hold one status per
+  claim.
+- **J2 — the corpus's own ledger has a stale row.** `F017`:104-116 lists
+  "draw-command COUNT as the cap — dead (F012 Claim 8)". `f012#13` was refuted
+  by `f013#4`. Not in the survey report.
+- **J5 amplified, J3, J6** — see `/map/index.md` § J.
+
+**The kill criterion did not fire.**
+
+⚠ **This is the sharpest argument yet for a MUTABLE index, and it is a different
+argument from the one that motivated the skill.** The original case was
+*append-vs-revise*: documents grow by appending, so tables go stale. This case is
+**adjudication**: two documents disagree about one claim's status, and only a
+claim-keyed structure forces them to meet. An index that must hold exactly one
+status per claim surfaces the collision automatically; a document-keyed index
+never can.
+
+⚠ **But note how J1 was found: by cross-reading two records from two different
+sub-agents (`f009` and `status`) against a third file.** That is compile work
+by nature. It is *not* evidence that the compiler must be a separate skill —
+a surveyor parent doing phase 2 would have the same records.
+
+### Check 2 — did it touch `STATUS.md` or any domain document?
+
+**No.** Verified by `git status --short` and `git diff --stat`, not recollection:
+the working tree shows exactly three untracked files, `map/README.md`,
+`map/areas.md`, `map/index.md`, and an empty diff. Rule 7 held.
+
+**The rule cost something and that is worth recording:** the compile found six
+corrections it was forbidden to apply, and had to invent a place to put them
+(`index.md` § J, "Corrections owed to the territory"). **§ J should be in the
+skill.** A compile that finds staleness and has nowhere structured to report it
+will either leak into the territory or lose the finding in prose.
+
+### Check 3 — cold start, with no existing index
+
+**It asked; it did not stall or improvise.** §1's "read the existing index in
+full" was unsatisfiable — there is none — so the run went to the
+replaces/feeds/beside question directly and put both decisions to the human in
+one call before ingesting anything. Answers: **map at `/map/` root**, and
+**FEEDS** (`STATUS.md` stays authoritative for humans, index compiles into it).
+Both are written into `/map/README.md`, so the next run reads them.
+
+⚠ **Gap in the skill:** §1 says "read the existing index in full" and says
+nothing about the first run, where there is none. It happens to fall through to
+the right behaviour because the replaces/feeds/beside question is right below
+it. **Make the bootstrap case explicit** — a first run has no incumbent index
+but always has an incumbent *entry point*, and that is the thing to ask about.
+
+### Check 4 — claim ids
+
+**Minted, coherently, and reproducibly — by refusing to mint a counter.**
+
+Scheme: `<record>#<n>` — the record's own `record:` slug and the claim's 1-based
+position in its `claims:` list. A global `c001…` sequence was considered and
+rejected: it renumbers on insertion, so a second run over a changed record set
+would not reproduce it. `<record>#<n>` is derivable from the YAML alone, by any
+run, in any order, with no registry. **A second run reproduces it exactly.**
+
+Consequence worth keeping: **no transcribed claim register was written.** The
+records already carry statement/status/grounding/tier/provenance/accessed/
+volatility; copying 296 of them into a second file creates a lossy duplicate
+that can drift from its source. **The records ARE the append-only claim body.**
+The map is then three files — README (conventions + the two decisions), index
+(mutable, authoritative), areas (territory + thin + blank).
+
+🛑 **This is a real change to the v1 contract and the skill should state it.**
+§4's index entry uses `current: <claim-id>` as if a claim register exists
+somewhere. It does not need to. **Address claims in place.**
+
+⚠ **Cost of the scheme:** it is only stable if records are append-only *within*
+themselves. If a surveyor inserts a claim mid-list on a re-survey, every id
+below it shifts. **Records must be append-only at claim level, not just at file
+level** — the skill does not currently say so, and this is now load-bearing.
+
+### Check 5 — the discriminator (does the compile run on records the surveyor did not gather?)
+
+**Still unanswered, and today does not answer it.** The handoff was manufactured
+by clearing context, exactly as the pre-registration warned. Same repo, same
+day, records gathered by sub-agents of the previous session.
+
+**What this run does contribute to the question:** the compile produced findings
+the survey did not (check 1), which kills the strongest "phase" argument — that
+compilation is bookkeeping. **It does not establish independence.** J1 was found
+by cross-reading records from two different sub-agents, and a surveyor parent
+doing phase 2 has exactly the same material.
+
+⇒ **The honest position after run 1: the compile is a distinct OPERATION with
+its own output, provably not a re-statement. Whether it is a distinct SKILL is
+untouched.** The discriminator still needs a real instance — records this agent
+did not commission, or a re-adjudication of old records under a changed rule.

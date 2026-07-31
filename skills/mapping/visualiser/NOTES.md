@@ -38,3 +38,41 @@ maturity rung.
 ## Friction log
 
 <!-- newest first; date each entry -->
+
+### 2026-08-01 — PRE-RUN PREDICTION: the index may not carry enough RELATIONS to draw a constellation
+
+⚠ **Written before the first run, so the run can score it.** This is a
+prediction, **not a finding.**
+
+**Setup:** the first real `cartographer` compile (24 records, 296 claims →
+`/map/index.md`, in `the-xemu-cartographer`) is about to be rendered. The
+visualiser reads **the index only**, by contract.
+
+**The prediction:** it will not be enough for the *constellation* view.
+
+- The index that compile produced is keyed by **topic → current claim**, and
+  carries **status, resolution, volatility, supersessions and contested pairs**.
+- What it carries almost none of is **claim-to-claim relations**. Those live in
+  the survey records' `relations:` blocks (`refutes`, `depends on`, `measures`,
+  `supersedes`) — **which the visualiser is not allowed to read.**
+- So the coverage / resolution / status views should render fine. **The
+  constellation should come out thin or unbuildable.**
+
+**Two ways that can go, and they have different fixes:**
+
+| Outcome | What it means | Fix belongs to |
+|---|---|---|
+| Renders thin but honest | Acceptable — the map genuinely has few recorded relations | nobody; record it |
+| Cannot be drawn without opening the records | **The index is under-specified**, and the "index only" contract is either wrong or is a constraint the cartographer must be told to satisfy | 🛑 **`cartographer`** — it should carry relations into the index |
+
+🛑 **The failure to avoid: quietly widening the visualiser's read permission to
+the records.** That would make the picture nicer and destroy the only structural
+guarantee this skill has — that a diagram cannot assert more than the index does.
+**If the index is insufficient, say so; do not route around it.**
+
+**Falsifier:** if the constellation renders usefully from the index alone, this
+prediction is wrong and the current cartographer output format is sufficient.
+Say so plainly.
+
+**Related:** `skills/mapping/NOTES.md` — this is a boundary question between two
+skills, not a rendering bug.
