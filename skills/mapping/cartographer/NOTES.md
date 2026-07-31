@@ -146,3 +146,47 @@ part**: it tells us whether `map format v1` is a real contract or merely a share
 vocabulary. **If it improvises all three coherently, the gaps are documentation.
 If it stalls or invents something the surveyor could never produce, they are
 design.**
+
+### 2026-07-31 — "why doesn't the surveyor write the index?" (the human, pre-run)
+
+**The human asked this cold, without having seen s009's §K kill criterion. They
+arrived at it independently.** That is worth more than the argument below: the
+split is not self-evident to a reader who has the skills in front of them.
+
+**The real case for the cartographer owning the index:**
+
+1. **The surveyor is *n* agents each seeing a slice; the index needs one writer
+   that sees everything.** §3 fans out. Concurrent writers to the one
+   authoritative file, each blind to the others, cannot resolve supersession —
+   which is inherently cross-record.
+2. **Supersession is cross-*run*, not just cross-record.** A survey holds only
+   its own records. "This overturns one from three months ago" needs the
+   accumulated map. The surveyor reads the index but sees only its conclusions,
+   never the other run's reasoning.
+3. **The operations decouple both ways.** Compile without surveying (records
+   arrive from elsewhere; or the same records need re-adjudicating under a
+   changed rule). Survey without compiling (emit now, index later, possibly by
+   someone else).
+
+🛑 **The honest counter, which is the human's point: every one of those is
+satisfied by "phase 2 of the surveyor."** Argument 1 says only that *the parent
+must do it after fan-out* — and the parent **is** the surveyor. This proves a
+separate **step**, not a separate **skill**.
+
+### The discriminator to settle it
+
+> **Does the compile ever run on records the surveyor did not gather?**
+
+**Yes** — someone else's records, records from months ago, records re-adjudicated
+under a new rule ⇒ **skill**, it has a life independent of any survey.
+**No** — always survey-then-immediately-compile, same agent, same session ⇒
+**phase**, and the split costs a handoff and a file format for nothing.
+
+⚠ **Today looks like "yes" but does not count.** The records cross a session
+boundary only because I chose to clear the context to avoid contaminating the
+scoring. **A manufactured instance is not evidence.**
+
+⚠ **And one signal already points at "phase":** the surveyor alone surfaced all
+11 traps and 6 contested claims before any compile ran (`surveyor/NOTES.md`,
+first dogfood entry). **If the compile adds nothing on top of
+`/map/survey/README.md`, that is the answer.**
