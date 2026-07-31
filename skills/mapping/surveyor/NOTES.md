@@ -260,3 +260,11 @@ Then, in order:
    blocked on it: only the compile can say what the records need to carry.
 3. §3d (breadth-before-depth adherence), §3e (shared citation index), §3g (read
    budgets) — all untested guesses, cheapest to settle by watching one more run.
+
+### 2026-07-31 — pre-cartographer-run: records carry no claim ids
+
+**The index (`cartographer` §4) points at `claim-id`s. This skill's record schema
+emits none** — claims are anonymous bullets under `claims:`. Either the surveyor
+starts emitting stable ids, or the cartographer mints them at ingest and says so.
+**Currently neither is written down.** Full note, with two other v1 contract
+holes and what to watch on run 1: `../cartographer/NOTES.md`.

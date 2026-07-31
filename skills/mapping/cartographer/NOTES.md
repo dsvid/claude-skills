@@ -109,3 +109,40 @@ and I did not weigh it.
 (`bd remember` / `bd recall`). That is a tool dependency the mapping skills
 should not assume; writing the answer into the map location's own `README.md` is
 the portable equivalent and is what §1 now says.
+
+### 2026-07-31 — pre-run: three holes in the v1 contract (raised by the human)
+
+**The human asked whether we "set the cartographer up to expect an index as
+input but didn't set the surveyor up to output one."** The flow is *not* broken
+that way — **the cartographer WRITES the index (§4); `surveyor` §2 and
+`visualiser` §1 READ it.** It is the cartographer's own prior output, read back
+on later runs. That chain is coherent.
+
+**But the question is pointed at something real. Three holes, watch all three on
+run 1:**
+
+1. 🛑 **The index points at `claim-id`s the surveyor never emits.** §4 entries
+   are `current: <claim-id>` / `contested_between: [<id>, <id>]`. **The
+   surveyor's record schema has no id field** — claims arrive as anonymous
+   bullets under `claims:`. So ids must be minted at ingest, and **neither skill
+   says so.** This is the closest thing to the human's hypothesis and it is a
+   genuine v1 contract break: *the surveyor emits nothing the index can point
+   at.* Cartographer owning id-minting is a defensible design (it owns the
+   append-only claim store) — but implied, it produces two incompatible id
+   schemes the moment two runs start cold.
+2. **Cold start is undefined.** §1: *"read the existing index in full before
+   ingesting anything"* — **no branch for there isn't one**, which is run 1.
+   `surveyor` §1 handles the equivalent ("if there is none, ask where it should
+   go"); this skill does not.
+3. **Nowhere says where the index physically lives.** §4 defines the entry
+   *schema*, not the file. One file? One per area? `_index.yaml`? All three
+   skills say "read the index"; none says what to read.
+
+⚠ **Deliberately NOT fixed before run 1 — and this time the reasoning is
+different from the write-boundary case above.** There, deferring risked damaging
+the human's own artefact for a worthless observation. Here **nothing is at risk**,
+and how the skill invents ids and copes with an empty index is **the informative
+part**: it tells us whether `map format v1` is a real contract or merely a shared
+vocabulary. **If it improvises all three coherently, the gaps are documentation.
+If it stalls or invents something the surveyor could never produce, they are
+design.**
