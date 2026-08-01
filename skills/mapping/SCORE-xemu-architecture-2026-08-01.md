@@ -146,6 +146,27 @@ execute a `resolved_by` when it is one cheap, non-mutating call — or
 
 ---
 
+## 3b. 17 misses are not 17 failures — they are **five**
+
+⚠ **Counting misses row-by-row overstates the failure and hides the fix.** The
+rows are not independent; they cluster onto a handful of steps not taken.
+
+| Root cause | Rows it cost | Cheap to fix? |
+|---|---|---|
+| **Never followed the org listing outward** into `abaire`'s ecosystem — the test suite, the golden corpus, `compare.py`, the pushbuffer tracer | **7** — D1, D2, D3, D4, D5, D6, D7 | ✅ **one `gh api` call**, which the map had already written down as the resolver |
+| **Stopped at struct declarations; never read the bodies** — no thread entry function, no lock-acquisition site | **3** — A1, A3, A5 | ✅ open `pfifo.c`; grep `qemu_mutex_lock` |
+| **Never opened `debug.h`, and reported instruments without their limits** | **3** — C1, C3, C4 | ✅ C3's answer was *inside the line range it cited* |
+| **Never traced the surface→texture mechanism** past trace-event density | **2** — B3, B4 | ⚠ genuinely a depth problem — the real one of the five |
+| **Never checked the build config for accelerators** | **1** — A2 | ✅ grep `auto_features` |
+| **Unreachable without running the emulator** | **1** — B2 | ❌ not a fair expectation of any survey |
+
+⇒ **One of six is a true depth failure. Four are breadth-and-one-more-hop, all
+cheap. One was never scoreable.** 🎯 **The D-block collapse is the single
+highest-leverage fact in this scoring: seven rows — including both remaining
+T-must rows — hang off one uncalled API request.**
+
+---
+
 ## 4. What this score does not license
 
 - **The key covers the graphics path and the test ecosystem only.** The map's
