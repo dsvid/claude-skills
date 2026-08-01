@@ -296,3 +296,48 @@ defer-to-observe only when run 1 can actually observe it.** Run 1 is a single
 compile with no prior index and no second survey, so nothing here was testable —
 deferring would have been pure delay. Contrast the claim-id gap in
 `../cartographer/NOTES.md`, which run 1 *will* exercise.
+
+---
+
+## The blind xemu run, scored 2026-08-01 — it stops at the edge of gaps it priced
+
+Full scoring: `../SCORE-xemu-architecture-2026-08-01.md`. Headline:
+**4 HIT / 17 MISS / 0 WRONG** of 21 oracle rows, **failing 3 of 4 T-must rows**
+while asserting nothing false.
+
+🎯 **The single most actionable pattern: every T-must miss was one cheap hop
+short, and in two of three cases the surveyor had already written down the hop.**
+
+| Missed row | What it had | The hop it did not take |
+|---|---|---|
+| **A1** — which thread renders | PFIFO's `QemuThread` from the struct **declaration** in `nv2a_int.h` | Open the thread's **body**. `pfifo.c:452` names `pfifo_thread`; `:464` calls `pgraph_process_pending` |
+| **C1** — the `NV2A_PROF_*` counters | `profile.c` (the FPS/mspf struct) | Open the sibling `debug.h`, which holds **53** counters incl. `SURF_TO_TEX_FALLBACK` |
+| **D1** — `nxdk_pgraph_tests` | An org-repo enumeration it recorded as **incomplete**, with `resolved_by: "Direct fetch of the org repositories page"` | Make that call. **One `gh api`.** Its output contains `nxdk_pgraph_tests` |
+
+⇒ **Proposed change (NOT yet made — this one is observable, so it is deferred to
+run 2 per the rule above): execute a `not_determined`'s own `resolved_by` when it
+is a single cheap, non-mutating call.** The surveyor already computes the
+resolver and the cost band; it then declines to spend the minute. ⚠ The obvious
+failure mode of the fix is unbounded fan-out — the bound has to be *one*
+non-mutating call, not "resolve what you can."
+
+🛑 **Not just a `not_determined` problem — C1 and A1 were never even asked.** A
+weaker, always-on version that would have caught both: **when a claim rests on a
+declaration, read the definition; when it rests on one file in a directory,
+list the directory.** Neither is fan-out; both are the same file's neighbours.
+
+✅ **What the run vindicates, and it is the load-bearing half:**
+- **Zero fabrication across 21 keyed rows and 12 records.** Unknown areas were
+  drawn blank, marked **Thin** in the index, and routed to `OPEN_QUESTIONS.md`.
+- **It produced a negative** — "xemu's CI runs no tests" — corroborated two
+  independent ways and *promoted* to Corrections owed. The oracle called
+  negatives the hardest thing for a survey to produce; this is the evidence it
+  can.
+- **Its own hedging was calibrated.** The entry it labelled *"most likely to be
+  wrong if re-verified"* turned out **right**, and was the run's most valuable
+  find (`the-xemu-cartographer/findings/F019`).
+
+⚠ **Precision failure mode seen here is counting, not claiming:** "14 workflow
+files" (there are 15) and "12 org repos" (13). Both are derived integers from a
+listing, both trivially recomputable, neither recomputed. Same family as the
+`n`-rule in `../cartographer/NOTES.md`.
