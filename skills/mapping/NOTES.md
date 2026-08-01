@@ -350,71 +350,13 @@ domain-agnostic, and it is the thing the pipeline was already 90% doing.
 
 ---
 
-## How to adjudicate a fresh-domain run — pre-registration for the generality test
+## Scoring the skills themselves → `EVALUATION.md`
 
-**Written 2026-08-01, BEFORE the run, per the source repo's own convention.**
-The open question: *all three skills were derived from one repo with its corpus
-in front of the author. Working there is not evidence of generality.* But a
-fresh domain has **no oracle** — which is precisely what made today's catch
-possible and what a new domain removes.
+**Moved 2026-08-01.** The pre-registered criteria for the fresh-domain
+generality run — conservation, precision, confabulation, oracle, usefulness,
+plus what would kill the family rather than tune it — now live in
+**`skills/mapping/EVALUATION.md`**, together with the scores of each run.
 
-🛑 **"We ran it and it produced a nice map" is an unscoreable outcome**, and it
-is the default one. Decide the criteria first.
-
-### The decomposition that makes it scoreable
-
-**"Is the skill good?" is not one question.** Today's evidence: ~200 pointer
-claims held up, one derived statistic was false, and ~45 open questions
-vanished. **Three different failure modes, three different tests.** A single
-global quality judgement would have scored that run as a success.
-
-| # | What it tests | How | Cost | Needs judgement? |
-|---|---|---|---|---|
-| **A** | **Conservation** — did anything silently vanish? | Count `claims:` in vs index entries out; `not_determined` in vs register out; every entry resolves to a real claim id; no entry traces to free text; every comparative statistic carries `n` | Minutes, mechanical | **No** |
-| **B** | **Claim precision** | Sample 20 claims, verify each against source | An hour | Barely |
-| **C** | **Confabulation** | Two cold surveys, same direction, independent. **Adjudicate only the diff** | One extra run | Only on the diff |
-| **D** | **Correctness against an oracle** | Choose a domain with a document that can score the map — CHANGELOG, ADR set, postmortem, a maintainer — and **withhold it from the run** | Domain choice | No |
-| **E** | **Usefulness** | **Pre-register a decision you actually need to make. Did the map change what you did?** | Free | Yes, and it is the point |
-
-### The three that matter most, and why
-
-- 🛑 **Stratify sample B by claim type, or it will hide exactly what it should
-  find.** Today: pointer claims ~100% correct, derived statistics 1-for-2. An
-  unstratified sample of 20 draws ~19 easy ones and reports 95%. **Sample 10
-  pointer-claims and 10 derived/inferred claims separately and report two
-  numbers.** One aggregate number is how this defect stayed invisible.
-- ✅ **C is the cheapest real signal on a domain with no oracle.** Where two
-  independent surveys agree, weak evidence; **where they disagree, at least one
-  is confabulating**, and you only have to hand-check the disputed points. It
-  turns "verify a whole map" into "verify a diff".
-- 🛑 **E is the one people skip and it outranks the rest.** A map that is
-  accurate, conserved, and changes nothing about what you do next **has failed**,
-  and no amount of A–D detects that. Write the decision down before the run.
-
-### ⚠ The limit to state up front: a fresh domain cannot test adjudication quality
-
-A–D test **precision and conservation**. They do not test the thing the
-cartographer mainly does — **taking a defensible position where the corpus holds
-two**. Judging that requires knowing the domain well enough to know who was
-right, which a fresh domain by definition denies you.
-
-⇒ **Two runs, not one, and they test different things:**
-
-| Run | Domain | Tests |
-|---|---|---|
-| 1 | **Fresh, with an oracle** (D) | Precision, conservation, confabulation — the generality claim |
-| 2 | **A domain you already know cold** | Adjudication quality — did it side correctly on contested points, and did it surface any you had missed? |
-
-**Neither alone settles it.** Run 2 is not a weaker version of run 1; it is the
-only one that can score the skill's central operation.
-
-### What would kill the skills rather than tune them
-
-- **A fails** ⇒ the spec fixes made 2026-08-01 did not take. Structural, not a
-  tuning problem.
-- **C shows the two surveys diverging on substance** (not just coverage) ⇒ the
-  records are being authored, not gathered. **That is fatal to the family**, not
-  a fixable rule.
-- **E fails on a domain where A–D all pass** ⇒ the artefact is fluent and
-  useless, which the source repo names as **worse than no map**. That is a
-  finding about the *format*, not the skills.
+🛑 **Not duplicated here.** NOTES records *what we learned building and running
+these*; `EVALUATION.md` records *how we decide whether they work*. Content lives
+in one place or neither is authoritative.

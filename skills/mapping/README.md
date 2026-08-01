@@ -239,21 +239,35 @@ Written before the first run, so they are not discovered as pleasant surprises.
   differently.
 - **`contested` is more work than picking a winner**, and picking a winner
   always feels more helpful. Expect pressure against it.
-- **Sub-agent fan-out flattens surprises.** The `unexpected` field is the
-  mitigation, and it is a weak one — a cold sub-agent may not recognise a
-  surprise as such.
+- **Sub-agent fan-out flattens surprises.** The `unexpected` field catches some of
+  it, and it is a weak mitigation — a cold sub-agent may not recognise a surprise
+  as such. ⚠ **And `unexpected` is leads-only** (2026-08-01): it is not a channel
+  for findings, because nothing in it has passed the claim schema.
 
 Each skill's `NOTES.md` carries its own pre-registered open questions, and
 `cartographer/NOTES.md` holds the four-case regression test for the index.
+**`EVALUATION.md` is how we decide whether any of it works** — the five tests,
+what "good" means per skill, and the scores of every run so far.
 
 ## Status
 
-All three are `draft` — written, never run.
+All three are `draft`. **Run three times, on one domain**
+(`the-xemu-cartographer`, 2026-07-31 → 08-01).
+
+🛑 **The first real run failed two of the five tests in `EVALUATION.md`**: the
+compile lost ~45 of 49 open questions, and it promoted a derived statistic
+computed over n=1 into the map's corrections table. **Both were spec defects, both
+are fixed, and neither fix has been validated by a run.**
 
 ⚠ **Nothing here has been validated against a domain other than the one it was
 derived from.** Running them on that domain tests the *mechanics* — whether the
 index resolves, whether the record schema is sufficient, whether the render
 stays honest. It cannot test whether the method generalises, and a clean run
 should not be read as evidence that it does.
+
+✅ **What that one domain did establish:** the pipeline found 11 dead-but-live
+claims and one live-but-dead claim that months of human reading had missed. **The
+method finds real things.** What is unproven is that it finds them anywhere else,
+and that it stops asserting things it has not checked.
 
 See the root `README.md` for what the maturity rungs mean.
