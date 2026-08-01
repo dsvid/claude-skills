@@ -142,6 +142,13 @@ the assignment.
 guarantees. They start cold, and without the direction they will report what is
 interesting rather than what is relevant.
 
+🛑 **And the reach, as its own line** (§0) — *"reach: outward. Enumerating the
+namespace and tracing contributors is in scope and expected."* **A sub-agent
+told only its subject will survey only its subject.** This is not belt-and-
+braces: the measured failure was an outward clause sitting **verbatim in every
+sub-agent's brief**, inside the direction, with nothing acting on it. **Reach
+is a separate line because it is a separate instruction.**
+
 ### Choose the model before dispatching
 
 **Sub-agents inherit your model unless the dispatch overrides it**, so an
