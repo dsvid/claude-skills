@@ -430,3 +430,57 @@ A1, A3, A5 — read the struct, never the thread body or the lock sites). It is
 3 rows, and every phrasing reduces to *"read more of the code"*, which is not a
 rule. **Left open.** If run 2 misses those rows again with the four fixes in
 place, that is the evidence that it needs its own mechanism.
+
+### 🎯 Proposal (human's, 2026-08-01, MEASURED): reach the ecosystem via the **contributor graph**
+
+**The question:** when a subject's ecosystem lives outside it — other people's
+repos, with no reference from the code — is it findable at all without knowing
+what to look for?
+
+**On the xemu run, the answer from source alone is no.**
+`git grep -i "abaire\|nxdk_pgraph\|xbdm"` across the whole subject at the
+surveyed SHA: **zero matches.** The ecosystem that owns its test suite, its
+golden corpus, its tracer *and its benchmark harness* is **invisible from the
+code**.
+
+**The human proposed: go to key contributors, then to what else they build.**
+Measured, and it works — **but the naive form fails badly, and the failure is
+the interesting part.**
+
+| Ranking method | Where the ecosystem's author lands |
+|---|---|
+| `contributors` API, whole repo | 🛑 **rank 84** |
+| `git shortlog` scoped to the paths **the fork itself added** | ✅ **rank 2** |
+
+🛑 **Why the whole-repo ranking is worthless on a fork:** the subject is a fork
+of a much larger upstream, so its history carries the upstream's contributors.
+**The top 14 were upstream maintainers with no involvement in the fork's own
+work.** The fork's author was 15th; the ecosystem's author 84th.
+
+✅ **The fix is one flag: rank contributions over the fork-specific paths.**
+
+```
+git shortlog -sne <sha> -- <the dirs the fork added>
+→ 763 <fork author> · 107 <ecosystem author> · 43 · 24 <same person, 2nd email> · 18 …
+```
+
+⚠ **Two practical caveats, both hit in the measurement:**
+- **One person, two identities.** The #2 contributor also appears at #4 under a
+  second email. **Naive counting splits them** — merge by name before ranking.
+- **`<login>@users.noreply.github.com` hands you the account name directly.**
+  That is the hop from a commit to a person's other work.
+
+⇒ **The chain, general and cheap:** scope the log to what the subject actually
+added → rank authors → resolve to accounts → enumerate their repos → **filter by
+the direction**, never by browsing.
+
+🎯 **Why this beats the fork-`parent` route** (the other proposal on the table):
+`parent` only fires if the organisation happened to fork the repo — an accident
+of how they vendored it. **The contributor graph exists for every subject under
+version control**, and it is the same one API call.
+
+⚠ **NOT APPLIED. Deliberately.** Four rules went into `SKILL.md` this session
+(291 → 372 lines) and this file already says: **if the next scoring shows no
+movement, cut them rather than adding a fifth.** ⇒ **If a fifth is added, it
+should be this one and not the `parent` rule** — same cost, strictly wider
+coverage. Decide after run 3, not before.
