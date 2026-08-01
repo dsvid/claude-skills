@@ -360,3 +360,36 @@ plus what would kill the family rather than tune it — now live in
 🛑 **Not duplicated here.** NOTES records *what we learned building and running
 these*; `EVALUATION.md` records *how we decide whether they work*. Content lives
 in one place or neither is authoritative.
+
+## Reach is a **pass**, not just a scope (human's refinement, 2026-08-01)
+
+*"It might be both, or I'd run an inward survey first and then an outward survey
+second — and both should be additive and feed cleanly into the cartographer."*
+
+⇒ Applied across **both** skills, because it is a pipeline property, not one
+skill's:
+
+| Skill | Change |
+|---|---|
+| `surveyor` §0 | Reach can be run in passes. A later pass **adds**; it never replaces. Say which pass this is, in the hand-over and the records |
+| `surveyor` §2 | The index tells you a **third** thing now: what was **never in scope**. An area missing from an `inward`-only map is unmapped, not empty |
+| `cartographer` §5 | Record a **pass log** — which reach was compiled and when. Distinguish **thin** (looked at, shallowly → re-survey) from **unsurveyed by reach** (nobody looked → new pass) |
+
+🛑 **Why this needed a change at all — the failure it prevents is silent.** An
+`inward`-only compile is **complete, internally consistent, and reads as though
+the subject stands alone.** The absent ecosystem leaves *no trace*: no record,
+no resolution, no `not_determined`, nothing for the skip list to catch. **It is
+the one gap in this format that is invisible from the inside**, and the pass log
+is the only thing that makes it visible.
+
+✅ **The additive half needed no machinery** — claims are append-only and the
+index is topic-keyed, so an outward pass adds topics beside the inward ones.
+**The rule added is a prohibition, not a mechanism:** do not re-survey the
+subject to "re-integrate" it, and do not re-open settled inward entries because
+a new pass arrived.
+
+⚠ **Cost, tracked honestly: `surveyor/SKILL.md` 291 → ~450 lines in one day.**
+That is a lot of spec for one scored run's worth of evidence. **Standing note:
+after run 3, consolidate before adding anything further** — several of today's
+additions overlap (§0 reach, §3 outward playbook, §7 gate all bear on breadth)
+and could likely be one shorter section.

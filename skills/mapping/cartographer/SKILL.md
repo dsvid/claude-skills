@@ -160,6 +160,29 @@ Maintain a short list of **thin areas**: where the direction needs more than the
 current resolution supplies. That list is what tells the user whether to re-run
 the surveyor, and it is one of the most useful things the map produces.
 
+### 🛑 Record which **reach** each pass covered — surveys arrive in passes
+
+Records carry a `reach` (`inward` / `outward` / `both`). **Carry it into the
+areas file and state it in the index header:** *"inward pass compiled
+2026-01-01; outward never run."*
+
+**Thin and unsurveyed are different failures and take different actions.**
+
+| | What it means | What it needs |
+|---|---|---|
+| **Thin** | Looked at, not deeply enough. Carries a resolution | Re-survey the area |
+| **Unsurveyed by reach** | **Nobody ever looked.** Carries no resolution, no record, no `not_determined` | A **new pass** at the missing reach |
+
+🛑 **The second row is invisible unless you write it down.** It leaves no trace
+in the records — an `inward`-only compile is *complete and internally
+consistent* with the entire ecosystem absent, and reads as though the subject
+stands alone. **Only the pass log says otherwise.**
+
+✅ **A later pass is additive, and needs no special handling:** claims are
+append-only and the index is keyed by topic, so an outward pass adds topics
+beside the inward ones. **Update the pass log, and never re-open settled inward
+entries just because a new pass arrived.**
+
 ## 5b. 🛑 Every `not_determined` bubbles up. None may be dropped
 
 The index needs a **register of open questions**, maintained exactly like the

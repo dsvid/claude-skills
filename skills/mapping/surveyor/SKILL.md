@@ -56,6 +56,25 @@ front-loadable.** *Which* gaps a survey will fail to reach is unknowable now —
 that is what §7's gate is for. **Which direction it should travel is knowable
 now, and only the user can say.**
 
+### ✅ Reach is a pass, and passes are additive
+
+**`inward` now and `outward` later is a first-class way to work**, and often the
+better one: it lands a usable map sooner and lets the user decide whether the
+ecosystem is worth the spend once they can see the subject. **A second pass adds
+to the map; it never replaces it.**
+
+- **Say so when only part of the ground is covered.** *"This is the inward pass;
+  the ecosystem is unsurveyed"* — in the hand-over **and** in the records.
+- 🛑 **`reach` is what makes the later pass safe.** Without it, a blank
+  ecosystem in the map is indistinguishable from an ecosystem that was looked
+  for and found empty. **One means "go look"; the other means "already
+  answered".** The field is the only thing that tells them apart, and the
+  second-pass surveyor reads it at §2.
+- **Both passes compile normally.** Claims are append-only and the index is
+  keyed by topic, so an outward pass adds topics beside the inward ones. **Do
+  not re-survey the subject to "re-integrate" it** — that is the waste §2
+  exists to prevent.
+
 ## 1. Find the map, and read its conventions
 
 Ask where the map lives, or find it: a `map/` directory, an `_inventory`, an
@@ -76,6 +95,11 @@ opposite things, and you need both.**
 
 - **What to skip.** Note each area's `resolution`. **Re-surveying ground already
   covered at sufficient resolution is the single most common waste.**
+- 🛑 **What was never in scope.** Read the **reach** of the passes already run
+  (§0). **An area missing from an `inward`-only map is unmapped, not empty** —
+  and it carries no `resolution` to warn you, because no record was ever
+  written about it. **This is the one gap the skip list cannot see**, and on a
+  second pass it is usually the whole job.
 - 🛑 **What to re-check.** Note each entry's `volatility` and `last_checked`.
   **A `live` claim needs re-surveying *because* it was surveyed before** — an
   open-issue count, a backlog figure, a "currently failing" list. Re-checking a
