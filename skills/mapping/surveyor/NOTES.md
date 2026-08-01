@@ -341,3 +341,60 @@ list the directory.** Neither is fan-out; both are the same file's neighbours.
 files" (there are 15) and "12 org repos" (13). Both are derived integers from a
 listing, both trivially recomputable, neither recomputed. Same family as the
 `n`-rule in `../cartographer/NOTES.md`.
+
+### ⚠ Supersedes the "one hop short" framing above — the disease is the **cost model**
+
+The section above says the run "declines to spend the minute". **That is the
+symptom, not the cause, and the human found the cause by asking whether the run
+had flagged its own gap.** It had — and more usefully than "flagged":
+
+`map_fresh/OPEN_QUESTIONS.md` entry **34 of 35**, under the heading
+**"Expensive (requires new survey scope, external fetch, or org-wide
+enumeration)"**:
+
+> *Full enumeration of the remaining repos in the xemu-project org (search
+> reported 12 total; only 6 individually named) — resolved by: direct fetch of
+> `https://github.com/orgs/xemu-project/repositories`*
+
+**Second-to-last item in the register, bottom cost band. It costs one `gh api`
+call — about two seconds.** It is simultaneously the cheapest unresolved item in
+the whole register and the most valuable: its output contains
+`nxdk_pgraph_tests` (T-must row D1) and `xemu-test` (→ `F019`).
+
+🛑 **The cost bands sorted by category, not by the call.** Local grep ⇒ cheap;
+anything leaving the machine ⇒ expensive. **"External fetch" is not a cost.**
+One API call and a week of crawling landed in the same band, so nothing
+downstream — sub-agent, orchestrator, compiler, human — ever saw it as
+actionable.
+
+⇒ **Revised fix, replacing the "execute a one-call resolver" proposal above,
+which treats the symptom:**
+
+1. **Price a `resolved_by` by the operation, not its category.** The band is
+   *how many calls and how long*, and a single non-mutating request is **cheap
+   wherever it lives**. A `resolved_by` that cannot be priced this way is
+   itself a signal the resolver is vague.
+2. **Gate before the compile, and ask.** Show the human the top of the cheap
+   band with what each would buy, and take a go/no-go. ⚠ **The trigger point is
+   the end of the survey, not the start of the run** — see below.
+
+🛑 **Why "just front-load how broad to go" does not fix this, though it is the
+right instinct.** At t=0 nobody — human or agent — knows the xemu-project org
+holds a test harness. **That knowledge only exists mid-run**, in one sub-agent,
+which correctly wrote it down and handed it off. Its `unexpected` field even
+names the recipient: *"worth a closer look by whichever agent is mapping xemu's
+overall testing/validation story."* **No such agent existed.** The handoff was
+addressed to a subject nobody had been assigned.
+
+⇒ **Two distinct failures, and only one is a pricing bug:**
+- **The register was mispriced** → fix 1 above.
+- **A sub-agent's referral had no addressee.** The fan-out is fixed at dispatch,
+  so a subject discovered *during* the run has nowhere to go. ⇒ **The
+  orchestrator must read the returned exceptions for referrals and decide
+  whether to dispatch a late agent — before compiling.** Currently §3's
+  "bound what comes back" collects exceptions and nothing acts on them.
+
+✅ **What IS front-loadable, and would have worked:** the direction itself —
+*"what related repos exist for testing, validation and performance profiling"* —
+**mandates an enumeration**, and that is knowable at t=0 from the direction
+alone. See the anti-browse carve-out proposed in the scoring doc.
