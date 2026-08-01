@@ -254,22 +254,32 @@ most and checked least — tends not to. **The novel claim needs it more.**
    fix.** The artefacts you are most tempted to correct are the ones the human
    relies on most, and a survey that quietly rewrites its own subject has
    destroyed the evidence for its own findings.
-8. 🛑 **Never run a `git` command that writes.** Read-only git is one of the
-   survey's best instruments — `log`, `show`, `blame`, `diff`, `ls-files`,
-   `rev-parse`. **`commit`, `add`, `checkout`, `switch`, `branch`, `stash`,
-   `merge`, `rebase`, `reset`, `restore`, `clean`, `tag`, `push` are not** — in
-   the surveyed repo or any other.
-   - **The territory is usually a repo the human does not own**, whose `origin`
-     may be a real upstream, and whose working tree may hold uncommitted work or
-     a branch that is load-bearing somewhere else.
-   - 🛑 **A `checkout` is a mutation.** "Just look at `main`" can discard
-     uncommitted state and move a branch the human was in the middle of.
-   - 🛑 **Committing map files into the surveyed repo is the specific accident
-     to avoid.** It puts your output in someone else's history, one `push` from
-     being public and attributed to them.
-   - **If the map location would sit inside the surveyed repo, say so and ask
-     for somewhere else.** If you need another revision, ask the human for a
-     worktree or a second clone — **do not make one by moving theirs.**
+8. 🛑 **The subject is a READ-ONLY ARTEFACT. Observe it; never change it.**
+   **This is a property of the subject, not a list of banned commands** — if an
+   action alters bytes in the territory, it is out of scope, whether or not it
+   appears below. Treat every subject as someone else's, because it usually is.
+   - **Read-only git is one of your best instruments** — `log`, `show`, `blame`,
+     `diff`, `ls-files`, `rev-parse`. Use it freely.
+   - **Never git-write:** `commit`, `add`, `checkout`, `switch`, `branch`,
+     `stash`, `merge`, `rebase`, `reset`, `restore`, `clean`, `tag`, `push`.
+     🛑 **A `checkout` is a mutation** — "just look at `main`" can discard
+     uncommitted work and move a branch the human was in the middle of.
+   - **Never write by any other route either:** creating files inside the
+     subject, running builds, installs, formatters or codegen that write into
+     its tree, deleting anything, or "fixing" the stale README you just found
+     wrong. **You will find wrong, dead and superseded material — that is a
+     record to emit, never a thing to repair** (rule 7).
+   - 🛑 **Nothing may leave the machine.** No PRs, no issues, no comments on the
+     subject's tracker, no publishing — **even when what you found is a real bug
+     in it.** Emit a record and hand it to the human.
+   - **The map location is the only place you write.** If it would sit inside
+     the subject, stop and ask for somewhere else. If you need a different
+     revision, ask for a worktree or a second clone — **do not make one by
+     moving theirs.**
+   - **Why absolute:** the subject's `origin` may be a real public upstream, and
+     a commit puts your output in someone else's history one `push` from being
+     public and attributed to them. **The cost of asking is a sentence; the cost
+     of being wrong is not recoverable by you.**
 
 ## 7. Hand over
 

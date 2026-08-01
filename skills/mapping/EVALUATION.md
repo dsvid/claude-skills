@@ -130,9 +130,17 @@ session that wrote it.
 
 **Ruled 2026-08-01 by the human**, before the first run against a real codebase:
 *"It is a good point that it could potentially commit a map to a repo that I
-don't own."* ⇒ All three `SKILL.md` files now carry a rule: **read-only git
-only** — `log`/`show`/`blame`/`diff`/`rev-parse` yes, **every writing verb no**,
-including `checkout`.
+don't own."* ⇒ All three `SKILL.md` files now carry the rule, and it is
+framed as **a property of the subject, not a list of banned commands**: *the
+subject is a read-only artefact.* Read-only git stays a first-class instrument;
+**every write does not** — git writes, files created in the tree, builds and
+installs that write into it, deletions, and **anything sent outward on the
+subject's behalf** (PRs, issues, tracker comments).
+
+⚠ **Why the framing, not just the list:** a verb list makes everything absent
+from it read as permitted — `gh issue create`, a build that dirties the tree, an
+install that rewrites a lockfile, "fixing" the stale README the survey just
+found wrong. **The property covers the cases nobody enumerated.**
 
 Two failure modes it prevents, both cheap to hit and expensive to undo:
 

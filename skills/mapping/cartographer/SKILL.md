@@ -255,20 +255,25 @@ not been present**, and check:
    what is stale; let the human change it.** Compiling a map must never mutate
    the territory it describes, and the artefacts you are most tempted to correct
    are the ones the human relies on most.
-8. 🛑 **Never run a `git` command that writes.** `log`, `show`, `blame`, `diff`
-   and `rev-parse` are legitimate compile instruments — pinning a SHA, dating a
-   claim, checking whether a file moved. **`commit`, `add`, `checkout`,
-   `switch`, `branch`, `stash`, `merge`, `rebase`, `reset`, `restore`, `clean`,
-   `tag`, `push` are not**, in the surveyed repo or any other.
-   - **The territory is often a repo the human does not own**, whose `origin`
-     may be a real upstream, and whose working tree may hold uncommitted work or
-     a branch that is load-bearing somewhere else.
+8. 🛑 **The territory is a READ-ONLY ARTEFACT. Compile from it; never change
+   it.** Rule 7 stops you rewriting its *files*; this covers everything else —
+   **its history, its working tree, and anything sent outward on its behalf.**
+   **A property of the subject, not a list of banned commands:** if an action
+   alters bytes in the territory, it is out of scope whether or not it is below.
+   - **Read-only git is a legitimate compile instrument** — `log`, `show`,
+     `blame`, `diff`, `rev-parse` for pinning a SHA, dating a claim, checking
+     whether a file moved. Use it freely.
+   - **Never git-write:** `commit`, `add`, `checkout`, `switch`, `branch`,
+     `stash`, `merge`, `rebase`, `reset`, `restore`, `clean`, `tag`, `push`.
+   - **Never write by any other route:** no files created in the territory, no
+     builds, installs or formatters that write into it, no deletions.
+   - 🛑 **Nothing leaves the machine** — no PRs, issues, tracker comments or
+     publishing, however clearly the territory is broken. **§ Corrections owed
+     is where that goes; the human applies it.**
    - 🛑 **Committing the map into the surveyed repo is the specific accident to
      avoid** — your output in someone else's history, one `push` from being
      public and attributed to them. **If the map location would sit inside the
-     surveyed repo, say so and ask for somewhere else.**
-   - Rule 7 stops you rewriting the territory's *files*; this stops you
-     rewriting its *history and working tree*, which is the less obvious half.
+     territory, say so and ask for somewhere else.**
 
 ## 9. Hand over
 
