@@ -122,6 +122,8 @@ Derived from where each has actually failed, not from what each aspires to.
 | 2026-07-31 | the-xemu-cartographer | surveyor + cartographer + visualiser | 🛑 **FAIL** — 49 `not_determined` in, ~4 out | ⚠ pointer ~100%, derived **1 of 2** | not run | n/a (self) | ✅ found 11 dead-live claims, 1 live-dead, 1 false claim of its own | Spec fixed 2026-08-01; **fixes unvalidated — no run since** |
 | 2026-08-01 | the-xemu-cartographer | cartographer only, re-compile of the **same 24 records** | ✅ **PASS** — 49 in, **49 out**, verified by script; **2 pre-existing free-text entries found and demoted**; `n`-less figures registered as `unverified` | not re-run (no new claims ingested) | not run | n/a (self) | 🔎 **NOT YET SCORED** | ⚠ **Weakest possible pass: same records the fix was written against, and the compiler read the pre-registration and the scoring criteria before compiling.** A rule that fires when the agent knows it is being marked is not shown to fire otherwise. See `cartographer/NOTES.md` run 2 |
 
+| 2026-08-01 | **xemu source** (`master` @ `cbffb57d08`) — first run against a codebase, and the first blind one | surveyor + cartographer | 🔎 **not yet scored** | 🔎 not yet scored | not run | 🔎 **KEY WRITTEN BEFORE THE RUN** — `ORACLE-xemu-architecture.md`, 17 tiered rows | 🔎 not yet scored | Output: 12 records, index/claims/areas/**open-questions**, ~1,360 lines, at `the-xemu-cartographer/map_fresh/`. ✅ **Read-only safeguard HELD** — after the run the subject's `git status` was empty, no new branches, reflog showed only the human's own `checkout` + `pull` |
+
 🛑 **The table is the point.** Criteria nobody scores are a wishlist. **Add a row
 per run, including the runs that went fine** — a fix is not validated by the
 session that wrote it.
