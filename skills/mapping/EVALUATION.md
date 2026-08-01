@@ -120,7 +120,26 @@ Derived from where each has actually failed, not from what each aspires to.
 | Date | Domain | Run | A cons. | B prec. | C conf. | D oracle | E useful | Notes |
 |---|---|---|---|---|---|---|---|---|
 | 2026-07-31 | the-xemu-cartographer | surveyor + cartographer + visualiser | 🛑 **FAIL** — 49 `not_determined` in, ~4 out | ⚠ pointer ~100%, derived **1 of 2** | not run | n/a (self) | ✅ found 11 dead-live claims, 1 live-dead, 1 false claim of its own | Spec fixed 2026-08-01; **fixes unvalidated — no run since** |
+| 2026-08-01 | the-xemu-cartographer | cartographer only, re-compile of the **same 24 records** | ✅ **PASS** — 49 in, **49 out**, verified by script; **2 pre-existing free-text entries found and demoted**; `n`-less figures registered as `unverified` | not re-run (no new claims ingested) | not run | n/a (self) | 🔎 **NOT YET SCORED** | ⚠ **Weakest possible pass: same records the fix was written against, and the compiler read the pre-registration and the scoring criteria before compiling.** A rule that fires when the agent knows it is being marked is not shown to fire otherwise. See `cartographer/NOTES.md` run 2 |
 
 🛑 **The table is the point.** Criteria nobody scores are a wishlist. **Add a row
 per run, including the runs that went fine** — a fix is not validated by the
 session that wrote it.
+
+### 🎯 The next run to do, and it is not the fresh repo
+
+**Test E is free, is owed anyway, and outranks A–D.** the-xemu-cartographer's
+go/no-go verdict is unwritten and overdue; `index.md` § A/§ K are its evidence
+skeleton and § L is the list it must answer or decline. **That is a real decision,
+already pending, on a domain the human knows cold.**
+
+⇒ **Write the verdict from the map, and score afterwards: did the map change what
+was concluded, or was it re-derived from `STATUS.md` and the findings anyway?**
+Pre-register the answer to *"what would I have written without it?"* first, or the
+scoring is retrospective and worthless.
+
+**It also happens to be run 2 of the two-run design above** — the adjudication
+test, which no fresh domain can perform. **Do it before the fresh repo:** run 1
+costs a new survey and a chosen oracle; run 2 costs nothing beyond work already
+scheduled, and if E fails here the fresh repo answers a question that no longer
+matters.
