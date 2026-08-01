@@ -160,6 +160,41 @@ Maintain a short list of **thin areas**: where the direction needs more than the
 current resolution supplies. That list is what tells the user whether to re-run
 the surveyor, and it is one of the most useful things the map produces.
 
+## 5b. 🛑 Every `not_determined` bubbles up. None may be dropped
+
+The index needs a **register of open questions**, maintained exactly like the
+contested register, carrying every `not_determined` from every record:
+
+| Question | Which record raised it | What would resolve it | Cost |
+|---|---|---|---|
+
+**This is not optional, and it is not a summary.** Every `not_determined` in
+every ingested record appears, or you say in the hand-over which you dropped and
+why. **Silently dropping them is the default failure** — they are the one part of
+a record that names something *absent*, and absence does not attract a topic
+entry to attach itself to, so it falls out of a topic-keyed index unless a
+register catches it.
+
+🛑 **Measured on the first real compile: 49 open questions went in, ~4 came out.**
+The dropped ones included a record's doubt about *how a dispersion figure was
+defined* — raised in the same compile that promoted a comparison with no `n`.
+**The pipeline had already noticed, and the compile threw the notice away.**
+
+### Why this register is the family's real output
+
+A map's value is not only what it settled. **The open questions are the survey's
+verdict on itself** — they are where the next work is, and they are the part no
+amount of re-reading the corpus regenerates, because the reader who could have
+asked the question has already moved on.
+
+- **Rank them by cost**, cheapest first. "Recompute this from data already on
+  disk" and "run a three-week experiment" must not be adjacent and undifferentiated.
+- **Carry `resolved_by` verbatim.** A question without its resolver is a
+  complaint. **The resolver is the deliverable.**
+- ⚠ **A question the compile *created* counts too** — anything you marked
+  `unverified` or demoted to a lead under §2 belongs here, or your own caution
+  disappears the moment you stop typing.
+
 ## 6. Volatility is per claim, not per source
 
 Two claims from the same source on the same day can decay at completely
@@ -179,6 +214,10 @@ not been present**, and check:
 - Does every entry resolve to a claim that exists?
 - Is any entry `current` where the evidence is genuinely contested?
 - Would someone entering here be sent to the newest claim on each topic?
+- 🛑 **Count them.** How many `not_determined` items went into this compile, and
+  how many are in the open-questions register? **If the second number is smaller,
+  name every missing one or put it back.** Do this by counting, not by
+  impression — the first real compile lost ~45 of 49 and nobody noticed.
 - 🛑 **Trace every entry back to its field.** Does any `current` entry — or any
   correction you are reporting — rest on `unexpected:` or other free text? Does
   any comparative number lack an `n`? **Those are the entries you will be least
@@ -196,6 +235,10 @@ not been present**, and check:
 2. **The index is the entry point.** When answering from the map, look up the
    topic — never conclude from a search across claims.
 3. **Never smooth over a gap.** "Not determined", plus what would resolve it.
+   🛑 **And that gap must reach the index's open-questions register** (§5b). A
+   `not_determined` recorded in a survey and dropped at compile is smoothed over
+   just as thoroughly as one never written — more so, because someone did the
+   work of noticing and the map now implies nobody did.
 4. **Every claim keeps its grounding, tier, provenance and accessed date**
    through compilation. Compiling never strips provenance.
 5. **Two records disagreeing about the same subject is a finding**, not a merge

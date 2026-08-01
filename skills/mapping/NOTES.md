@@ -292,3 +292,129 @@ believed), but it is a real cost and it will make some compiles feel thinner.
 🛑 **Watch for the failure mode where everything interesting becomes a lead and
 the index goes bland.** If that shows up, the answer is a recomputation step —
 not relaxing the rule. ⇒ ties back to the open scripts question above.
+
+---
+
+## The bigger hole, found while fixing the first: `not_determined` does not survive the compile
+
+**Measured on the first real compile, 2026-08-01. 49 `not_determined` items went
+in. About 4 came out.**
+
+The index had bubbling registers for **contested**, **staleness** and
+**corrections** — and **none for open questions**. So the surveyor collected them
+diligently, per its own rule 1, and the cartographer evaporated ~45 of them.
+
+🛑 **This is a bigger defect than the n=1 promotion that led me to it.** That one
+put a wrong claim in the map; this one **removes the map's account of what it
+does not know** — and a map that has quietly lost its own gaps is the exact
+artefact this family exists to prevent.
+
+**Why it happens structurally, not by carelessness:** the index is keyed
+*topic → current claim*. A `not_determined` names something **absent**. There is
+no current claim for it to attach to, so it has nothing to bind to in a
+topic-keyed structure and falls out silently. **Every other record field has a
+natural home in the index; this one does not.** ⇒ it needs an explicit register
+or it is lost by construction.
+
+**The detail that makes the case:** among the dropped items was a record's doubt
+about *how a dispersion figure was defined* (`"what statistic do STATUS.md/F016
+mean by 'the spread'?"`). It was dropped in the **same compile** that promoted a
+comparison with no `n`. **The pipeline had already noticed the adjacent problem
+and the compile threw the notice away.**
+
+### Fix applied
+
+- `cartographer` **§5b (new)**: every `not_determined` bubbles to an
+  **open-questions register** — question, record, `resolved_by` verbatim, cost —
+  ranked cheapest first. Dropping one requires naming it in the hand-over.
+  Questions the *compile itself* creates (`unverified`, demoted leads) go there
+  too, or the compiler's own caution evaporates with it.
+- `cartographer` **§7 read-back gate**: **count them in, count them out.** If the
+  register is smaller than the input, name every missing one or restore it.
+  By counting, not by impression.
+- `cartographer` **rule 3**: "never smooth over a gap" now explicitly covers
+  compile-time drops — *a `not_determined` recorded in a survey and dropped at
+  compile is smoothed over more thoroughly than one never written, because
+  someone did the work of noticing and the map now implies nobody did.*
+
+### The design position this settles
+
+Considered and **rejected**: a bundled recomputation script. Recomputation is
+irreducibly domain-specific — CSVs here, SQL elsewhere, log parsing elsewhere
+again — so a generic one cannot exist, and it would sit surveyor-side anyway
+(the cartographer never holds the data). **The family stays prose-only.**
+
+✅ **The answer is not to verify more; it is to state clearly what was not
+verified, and bubble it where someone walks into it.** That is cheaper, it is
+domain-agnostic, and it is the thing the pipeline was already 90% doing.
+
+---
+
+## How to adjudicate a fresh-domain run — pre-registration for the generality test
+
+**Written 2026-08-01, BEFORE the run, per the source repo's own convention.**
+The open question: *all three skills were derived from one repo with its corpus
+in front of the author. Working there is not evidence of generality.* But a
+fresh domain has **no oracle** — which is precisely what made today's catch
+possible and what a new domain removes.
+
+🛑 **"We ran it and it produced a nice map" is an unscoreable outcome**, and it
+is the default one. Decide the criteria first.
+
+### The decomposition that makes it scoreable
+
+**"Is the skill good?" is not one question.** Today's evidence: ~200 pointer
+claims held up, one derived statistic was false, and ~45 open questions
+vanished. **Three different failure modes, three different tests.** A single
+global quality judgement would have scored that run as a success.
+
+| # | What it tests | How | Cost | Needs judgement? |
+|---|---|---|---|---|
+| **A** | **Conservation** — did anything silently vanish? | Count `claims:` in vs index entries out; `not_determined` in vs register out; every entry resolves to a real claim id; no entry traces to free text; every comparative statistic carries `n` | Minutes, mechanical | **No** |
+| **B** | **Claim precision** | Sample 20 claims, verify each against source | An hour | Barely |
+| **C** | **Confabulation** | Two cold surveys, same direction, independent. **Adjudicate only the diff** | One extra run | Only on the diff |
+| **D** | **Correctness against an oracle** | Choose a domain with a document that can score the map — CHANGELOG, ADR set, postmortem, a maintainer — and **withhold it from the run** | Domain choice | No |
+| **E** | **Usefulness** | **Pre-register a decision you actually need to make. Did the map change what you did?** | Free | Yes, and it is the point |
+
+### The three that matter most, and why
+
+- 🛑 **Stratify sample B by claim type, or it will hide exactly what it should
+  find.** Today: pointer claims ~100% correct, derived statistics 1-for-2. An
+  unstratified sample of 20 draws ~19 easy ones and reports 95%. **Sample 10
+  pointer-claims and 10 derived/inferred claims separately and report two
+  numbers.** One aggregate number is how this defect stayed invisible.
+- ✅ **C is the cheapest real signal on a domain with no oracle.** Where two
+  independent surveys agree, weak evidence; **where they disagree, at least one
+  is confabulating**, and you only have to hand-check the disputed points. It
+  turns "verify a whole map" into "verify a diff".
+- 🛑 **E is the one people skip and it outranks the rest.** A map that is
+  accurate, conserved, and changes nothing about what you do next **has failed**,
+  and no amount of A–D detects that. Write the decision down before the run.
+
+### ⚠ The limit to state up front: a fresh domain cannot test adjudication quality
+
+A–D test **precision and conservation**. They do not test the thing the
+cartographer mainly does — **taking a defensible position where the corpus holds
+two**. Judging that requires knowing the domain well enough to know who was
+right, which a fresh domain by definition denies you.
+
+⇒ **Two runs, not one, and they test different things:**
+
+| Run | Domain | Tests |
+|---|---|---|
+| 1 | **Fresh, with an oracle** (D) | Precision, conservation, confabulation — the generality claim |
+| 2 | **A domain you already know cold** | Adjudication quality — did it side correctly on contested points, and did it surface any you had missed? |
+
+**Neither alone settles it.** Run 2 is not a weaker version of run 1; it is the
+only one that can score the skill's central operation.
+
+### What would kill the skills rather than tune them
+
+- **A fails** ⇒ the spec fixes made 2026-08-01 did not take. Structural, not a
+  tuning problem.
+- **C shows the two surveys diverging on substance** (not just coverage) ⇒ the
+  records are being authored, not gathered. **That is fatal to the family**, not
+  a fixable rule.
+- **E fails on a domain where A–D all pass** ⇒ the artefact is fluent and
+  useless, which the source repo names as **worse than no map**. That is a
+  finding about the *format*, not the skills.
