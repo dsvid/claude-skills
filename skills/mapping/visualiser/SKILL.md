@@ -104,6 +104,11 @@ Finish by naming, in a line or two:
   the point;
 - **`live` claims whose `last_checked` is old**, because a diagram makes a stale
   number look freshly true;
+- 🛑 **entries the index marks `unverified`, or any figure it gives without an
+  `n`** — the same hazard as staleness and a worse one, because a stale number
+  was at least true once. **Either draw it with the unverified marking the index
+  gave it, or leave it out and say you did.** Never render it as a bare number;
+  a diagram strips every qualifier the index was careful to attach;
 - anything in the map that could not be rendered honestly, and why.
 
 **Do not fix the map to make the picture nicer.** A map that renders awkwardly

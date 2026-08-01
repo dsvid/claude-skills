@@ -174,7 +174,10 @@ claims:
 not_determined:
   - question: <what could not be established>
     resolved_by: <what would settle it>
-unexpected: <free text — anything noticed that the direction did not ask for>
+unexpected: <free text — anything noticed that the direction did not ask for.
+             🛑 LEADS ONLY. Nothing here is a claim, and the cartographer may
+             not promote it to one. If it is falsifiable, it belongs in
+             `claims:` with full fields — see rule 4>
 ```
 
 ### Provenance tiers — record the highest that honestly applies
@@ -198,6 +201,30 @@ said, and whether it has been tested. Treat it as a hypothesis, and say so.
 **Derived claims** are pinned by the transformation plus its inputs — record the
 operation and the input artefacts, or it is not reproducible.
 
+### 🛑 A derived statistic carries its `n` and its spread, in the statement
+
+Reproducibility is not enough. A median computed over **one** run and a median
+computed over **eight** are both perfectly reproducible, both correctly
+provenanced, and only one of them means anything.
+
+- **State `n` in the statement itself**, not in the provenance line. A reader
+  comparing two numbers must see what each was computed over without leaving the
+  sentence.
+- **State the spread** (sd, or range) whenever the claim asserts that two values
+  **differ**. A difference smaller than the within-group spread is not a
+  difference, and you cannot know that without computing it.
+- 🛑 **Never describe a subset as its population.** If the figure is run 1, the
+  statement says *run 1* — not "the control arm". Naming the subset in one half
+  of a comparison and dropping it in the other is the specific error that
+  produced this rule.
+- If `n` or the spread cannot be established, the claim is `not_determined`, and
+  `resolved_by` is the recomputation.
+
+⚠ **Watch the asymmetry that hides this.** A recomputation that *confirms* an
+existing figure tends to carry `n`, because a prior claim is there to check
+against. A recomputation that *asserts something new* — exactly the one worth
+most and checked least — tends not to. **The novel claim needs it more.**
+
 ## 6. Rules
 
 1. **Never smooth over a gap.** Write it into `not_determined` with what would
@@ -210,7 +237,13 @@ operation and the input artefacts, or it is not reproducible.
    it; the disagreement is itself a finding.
 4. **Record, do not conclude.** Mechanisms, causes and recommendations are not
    yours. If a conclusion is forming, write it as an `inferred` claim with its
-   reasoning, or put it in `unexpected`.
+   reasoning.
+   🛑 **`unexpected` is not the overflow for that.** It takes *leads* — things
+   worth someone's attention — never a falsifiable assertion, and never a
+   number. **Anything falsifiable goes in `claims:` with grounding, tier,
+   provenance, accessed, and (if derived) `n`**, where the schema forces the
+   discipline. Writing it as free text is how an unchecked figure reaches a map
+   wearing the authority of a checked one.
 5. **Cheap before expensive**, and when something expensive is needed, say what
    it will cost before starting it.
 6. **`unexpected` is not optional.** The thing noticed while chasing something

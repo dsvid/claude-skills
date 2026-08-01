@@ -72,6 +72,41 @@ For every claim in every record, decide which of these it is:
 | **Contests** — incompatible, and you cannot honestly say which wins | Append. **Mark the entry `contested` and point at both.** See below |
 | **Raises resolution** — same area, more detail | Append. Update the area's resolution level |
 
+### 🛑 Only `claims:` may become an index entry. Free text may not
+
+A record's `unexpected:` field — and any other free text in it — carries **no
+grounding, no tier, no provenance, no `n`**. The claim schema is where a
+surveyor's discipline is enforced, and content that never passed through it has
+never been checked.
+
+**So it does not enter the index as a claim.** Not as `current`, not as a
+correction, not as a numbered entry:
+
+| Where it came from | The most it may become |
+|---|---|
+| `claims:` | `current` / `contested`, per the table above |
+| `not_determined:` | A `not_determined` entry with its `resolved_by` |
+| **`unexpected:` or any free text** | 🛑 **A lead** — `not_determined`, with the record's own hedge **preserved verbatim** and `resolved_by` naming what would check it |
+
+⚠ **Preserve the hedge word for word.** A record that says *"run 1 = 15,163…
+recording, not concluding"* is being honest; the failure is a compile that keeps
+the number and drops both qualifiers. **If you find yourself paraphrasing a
+hedge, you are laundering it.**
+
+🛑 **This binds hardest on the corrections you report to the human**, because
+that section carries the most authority in the whole map. A correction resting
+on free text is **`unverified`**, and says so.
+
+### ⚠ A derived statistic with no `n` is not a claim, whatever it looks like
+
+If a record asserts that two values **differ** and does not say what each was
+computed over, **you cannot promote it**. Correct provenance says where a number
+came from; it never says how many of it there were.
+
+Enter it as `not_determined`, `resolved_by` = recompute over the full set. **The
+compile cannot check this itself** — you do not hold the underlying data — and
+**that is the reason the entry must not claim to have been checked.**
+
 ### 🛑 `contested` is a first-class state, not a failure
 
 If two claims disagree and the evidence does not settle it, **the index must say
@@ -144,6 +179,13 @@ not been present**, and check:
 - Does every entry resolve to a claim that exists?
 - Is any entry `current` where the evidence is genuinely contested?
 - Would someone entering here be sent to the newest claim on each topic?
+- 🛑 **Trace every entry back to its field.** Does any `current` entry — or any
+  correction you are reporting — rest on `unexpected:` or other free text? Does
+  any comparative number lack an `n`? **Those are the entries you will be least
+  able to defend and most likely to be quoted on.**
+- ⚠ **Which entry would you be most embarrassed by if the human recomputed it?**
+  Go and mark that one, now. Compiling cannot verify data, so the map's job is to
+  say plainly which entries were never verified.
 - Is anything asserted in your summary that is **not written in a file**? If it
   matters after this turn, it goes in the map — not in the reply.
 
@@ -158,6 +200,10 @@ not been present**, and check:
    through compilation. Compiling never strips provenance.
 5. **Two records disagreeing about the same subject is a finding**, not a merge
    conflict. Surface it; it is one of the main things compilation is for.
+5b. 🛑 **Compiling never upgrades a claim's standing.** An entry is at most as
+   checked as the field it came from. Free text stays a lead; a statistic with
+   no `n` stays unverified; a hedge survives verbatim. **The index inherits
+   authority from its claims — it cannot confer any.**
 6. **Compile what exists before asking for more.** Re-reading material already
    collected outperforms new collection often enough to be a gate.
 7. 🛑 **Write only to the map location. Never edit the domain's own documents or

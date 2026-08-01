@@ -118,3 +118,177 @@ against the next skill's input requirements.
 
 🛑 **Do not resolve it by widening the visualiser's read permission.** That
 trades the one structural guarantee in the pipeline for a nicer picture.
+
+---
+
+### 2026-08-01 — PARTIAL ANSWER: the index carries supersessions but not grounding tags, and `areas.md` is load-bearing for the visualiser
+
+**First visualiser run happened** (`the-xemu-cartographer`, cold session,
+`/map/views.md`). Two boundary facts about how the compile's output feeds the
+next skill:
+
+1. ⚠ **The "index" the visualiser actually needs is `index.md` PLUS `areas.md`.**
+   The coverage view — the one this family argues is most valuable — is
+   substantially a rendering of `areas.md`: resolution levels, thin-area ranking,
+   the blank table. **`areas.md` is not optional cartographer output; it is the
+   coverage view's data.** Both skills' contracts currently say "the index",
+   singular, which understates it.
+2. 🛑 **The index points at claims but does not carry their grounding tags.**
+   `visualiser` §3 rule 1 ("solid source / dashed inferred / dotted docs") is
+   therefore **not fully executable from a conforming index** — the tag lives in
+   the record the id points at. The run worked around it by relabelling dashed as
+   "inferred OR grounding not stated". **The fix belongs to `cartographer`:
+   carry the grounding tag alongside the claim id.** The alternative — letting
+   the visualiser open the records to look up tags — is the one move that must
+   not be made.
+
+**The relations question from the entry above is NOT resolved.** No constellation
+was drawn (the human asked for coverage and architecture). Observation only: the
+index states supersessions and contested pairs explicitly and **no other relation
+kind**, so a constellation would likely render as a supersession chain and little
+else. Still a prediction.
+
+**New, and general to the family:** a view orthogonal to the **direction** the
+map was compiled against is under-supported no matter how high-resolution the map
+is. The xemu map is R3 on mechanisms and instruments, and an *architecture* view
+still came out a sketch, because the direction was about evidence currency.
+⇒ **Direction is not just a survey-time input; it silently bounds what can be
+rendered later.** Worth stating in `README.md` where direction is introduced.
+
+---
+
+### 2026-08-01 — FAMILY-LEVEL CALL DEFERRED TO THE SKILLS REVIEW: should the mapping family have scripts?
+
+**Pointer, not a restatement.** Raised by the visualiser's first run; the
+evidence and the mechanism are in `visualiser/NOTES.md`, same date.
+
+In one line: **`visualiser` §5's default output route cannot produce a navigable
+diagram**, and fixing it properly means every run rewrites the same HTML viewer
+boilerplate — which a script in the skill directory would solve.
+
+🛑 **But the family currently has no scripts: three skills, six files, all
+prose.** Adding one changes what this family *is* (portable, language-agnostic
+instructions that need no runtime) rather than just fixing one skill. **Decide it
+for the family, not for `visualiser` alone**, and decide it in the review — the
+human deferred it mid-run specifically to keep s011's ordering intact.
+
+---
+
+## Provenance does not cover sample size — a third trap class, found by recomputation
+
+**Source:** the-xemu-cartographer s012, 2026-08-01. Full case:
+`findings/F018-2941-does-not-move-pgr1-lock-wait.md` in that repo.
+
+The pipeline's single most valuable-looking output — the one item flagged
+*"recorded, not concluded; nothing in the corpus states this"* — was **false**.
+A surveyor read committed CSVs, quoted a median from run 1 of one arm against
+run 1 of another, and the compile promoted it to the index's corrections table.
+At n=8/arm the two distributions were indistinguishable.
+
+**Every check in the family passed.** File path correct, arm labels correct,
+`[source]` tag correct, the number really is in the file. **Provenance answers
+*where a number came from*; it never answers *how many of it there were*.**
+
+Worse: **the same extraction method produced one sound claim and one false one
+in the same record.** The paired title's effect was 3–4 orders of magnitude, so
+run-1-vs-run-1 was harmless there. A reviewer sanity-checking the record would
+have hit the sound half first.
+
+### What this implies for the family
+
+- 🛑 **`surveyor` must not emit a computed statistic as a claim without n and
+  spread.** A median with no denominator is a quotation, not a measurement.
+  Candidate rule: *any claim whose value was computed rather than read as a
+  literal string carries `n:` and a dispersion figure, or it is emitted as
+  `not_determined` with the recomputation named as the resolver.*
+- ⚠ **`cartographer` cannot catch this and should stop implying it can.** The
+  compile adjudicates *between* records; it has no access to the underlying data.
+  Promoting a single-record numeric claim into a corrections table **launders it
+  into the map's most authoritative section.** Candidate rule: *corrections that
+  rest on a computed statistic from one record are marked `unverified` until
+  recomputed.*
+- 🔎 **Open question for the review: does this family need a verification step at
+  all?** Only recomputation caught it — no amount of reading would have.
+  That collides directly with the open "no scripts in this family" decision
+  above: **a recomputation step is the first thing that would genuinely need a
+  runtime.** ⇒ **Decide the scripts question and this one together.**
+
+### Follow-up: the escape hatch was the UNSTRUCTURED field, and the compile laundered it
+
+Traced 2026-08-01, same session. **The surveyor's claim schema did its job. The
+failure came through the one field that has no schema.**
+
+The false claim was **not a numbered claim**. Numbered claims in that record all
+carry `status / grounding / tier / provenance / accessed / volatility`, and the
+fps recomputations in the sibling record all carry `n=8` and `sd`. The lock-wait
+item went into the record's free-text **`unexpected:`** field, which carries
+none of those, and it was honest inside its own frame — it says
+*"PGR2 control **run 1** = 15,163"* and closes *"Recording, not concluding."*
+
+**`cartographer` then promoted that free-text note into `§ D` as a topic entry
+with status `current`, and into `§ J5`, the corrections table** — the map's most
+authoritative section. **"run 1" and "recording, not concluding" did not
+survive the promotion.**
+
+Note the asymmetry that made it invisible: the recomputations that **confirmed**
+an existing figure carried `n` and `sd`, because a prior claim was there to check
+against. The one that **asserted a new effect** carried neither. **The discipline
+was applied where it was least needed and dropped where it mattered.**
+
+- 🛑 **`cartographer`: `unexpected:` / free-text fields must not be promotable to
+  a topic entry or a correction at full status.** They are leads. Candidate rule:
+  *content originating outside the claim schema enters the index as
+  `not_determined` with the record's own hedge preserved verbatim, or not at
+  all.* This is one rule and it would have caught the whole thing.
+- ⚠ **This is not evidence that mapping is unreliable, and the fix is not "lower
+  resolution".** ~200 pointer-claims in the same compile held up under checking.
+  What failed was one claim type crossing one schema boundary.
+- 🛑 **Bears directly on the planned "run the pipeline on a fresh domain" step:
+  a fresh domain makes this WORSE, not better.** The only reason this was caught
+  is that the underlying 65 runs were committed and could be recomputed. **On a
+  fresh domain nobody can check, and the same free-text promotion would stand.**
+  ⇒ **Fix the promotion rule BEFORE the fresh-domain run**, or that run cannot
+  distinguish a good map from a fluent one.
+
+### FIXED 2026-08-01 — and here is the regression test
+
+Applied to all three skills. **Three independent catches**, deliberately, because
+the defect passed every check the family had:
+
+| # | Skill | Rule |
+|---|---|---|
+| 1 | `surveyor` §5 | **A derived statistic carries its `n` and its spread, in the statement.** Never describe a subset as its population. No `n` ⇒ `not_determined` |
+| 2 | `surveyor` rule 4 | **`unexpected` takes leads, never falsifiable assertions or numbers.** Rule 4 previously *routed* forming conclusions there — it was the pipe feeding the hole |
+| 3 | `surveyor` schema | `unexpected` annotated **LEADS ONLY, not promotable** |
+| 4 | `cartographer` §2 | **Only `claims:` may become an index entry.** Free text → a lead at most, **hedge preserved verbatim**. Corrections resting on free text are `unverified` |
+| 5 | `cartographer` §2 | **A comparative statistic with no `n` cannot be promoted.** The compile does not hold the data, so it must not imply it checked |
+| 6 | `cartographer` §7 | Read-back gate: **trace every entry back to its field**; mark the entry you would be most embarrassed by if the human recomputed it |
+| 7 | `cartographer` rule 5b | **Compiling never upgrades a claim's standing.** The index inherits authority; it cannot confer it |
+| 8 | `visualiser` §6 | Never render an `unverified` or `n`-less figure as a bare number — a diagram strips every qualifier the index attached |
+
+**Regression test — the original case, run against the new rules:**
+
+1. Surveyor writes it as free text → **rule 4 blocks it**: falsifiable + numeric,
+   so it must go to `claims:`.
+2. In `claims:` → **the `n` rule fires**: it is n=1, and *"never describe a subset
+   as its population"* catches `PGR1 control = 31` (that is run 1). ⇒
+   `not_determined`, resolved by recomputation.
+3. If it escaped both, **cartographer §2 blocks promotion** to § D / § J5; it
+   lands as a lead carrying *"recording, not concluding"* verbatim.
+4. If it escaped that, **the read-back gate asks which correction rests on
+   `unexpected:`** — § J5 is the answer.
+
+✅ **Caught four times over.** The original was caught zero times.
+
+### ⚠ The cost, stated honestly
+
+**The same record's PGR2 migration observation was also free text, and it is
+true and valuable.** Under the new rules it is demoted to a lead needing
+recomputation — which is exactly the round-trip s012 had to do anyway.
+
+**So the fix trades a true finding's authority for a false one's suppression.**
+That is the right trade here (a lead still surfaces; a laundered claim gets
+believed), but it is a real cost and it will make some compiles feel thinner.
+🛑 **Watch for the failure mode where everything interesting becomes a lead and
+the index goes bland.** If that shows up, the answer is a recomputation step —
+not relaxing the rule. ⇒ ties back to the open scripts question above.
