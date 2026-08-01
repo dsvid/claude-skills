@@ -309,3 +309,63 @@ doing phase 2 has exactly the same material.
 its own output, provably not a re-statement. Whether it is a distinct SKILL is
 untouched.** The discriminator still needs a real instance — records this agent
 did not commission, or a re-adjudication of old records under a changed rule.
+
+---
+
+## Run 2 — 2026-08-01, the scored re-compile (same 24 records, cold session)
+
+Pre-registered by the human at the-xemu-cartographer s012 close, scored by
+`grep -c`, not by judgement. **Result: §5b took. 49 `not_determined` in,
+49 out** (run 1: 49 in, ~4 out). Register at that repo's `map/index.md` § L.
+
+### What made the difference, concretely
+
+**Not the rule text alone — the rule plus a mechanical extraction step.** The
+compile did not read the records and remember the questions; it ran a parser
+over the YAML that printed every `- question:` with its record and its
+`resolved_by`, numbered 1–49, *before* writing anything. Then it wrote the
+register from that dump and verified with a script that every question's first
+45 characters appear in the finished index.
+
+⇒ **Candidate skill change: say this in §5b.** "Extract the `not_determined`
+items mechanically into a working list before compiling, and diff the finished
+register against that list." A rule that asks the compiler to *remember* 49
+items across a long compile is asking adherence to survive context pressure —
+which is the exact failure §7 exists to catch. **Give it a tool, not a
+reminder.** Cost: two short scripts, ~3 minutes.
+
+### 🔥 The rule gap this run found: §2's free-text rule is ingest-only
+
+The secondary criterion was *"nothing from the 24 `unexpected:` blocks appears
+as a `current` entry or a correction."* This run passed it on **its own** output
+— and then found **two violations already sitting in the index from run 1**:
+
+- a host-CPU correction ("6 cores, and STATUS.md reasons from 8") resting
+  entirely on a record's `unexpected:` block, not on any claim;
+- a "the only matched-duration fast/slow pair the exercise owns" line, likewise.
+
+**Neither was catchable at ingest, because ingest was over.** §2 and rule 5b
+tell you what free text may *become*; nothing tells a later compile to
+**re-audit entries a previous compile already wrote.**
+
+⇒ **Candidate skill change: §7's read-back gate should trace *existing* entries
+back to their field, not only new ones.** The gate already says "trace every
+entry back to its field" — but in practice a re-compile reads the index as
+context (§1) and treats it as settled. **Say explicitly: the index you read in
+§1 is input to be audited, not authority to be inherited.** A map that is
+compiled more than once needs the free-text rule to be a *standing* invariant.
+
+### Second-order: the register is where the map's own doubt goes to survive
+
+The five compile-created questions (`L-b`) include the compile's nomination of
+**the entry it would be least able to defend** (§7 asks for this; nothing said
+where to *put* it). Run 1 had nowhere to put it and it evaporated. **§7's
+"mark that one, now" should name the open-questions register as the destination
+— otherwise the caution is written in the reply and lost**, which is the same
+failure as dropping a `not_determined`.
+
+### Check 5 — the discriminator: still unanswered, and this run is weaker on it
+
+Same repo, same records, and the compiler was **told the pre-registration and
+the score criteria before it began**. That is the opposite of a blind run.
+**Passing here is the floor.** `EVALUATION.md` still needs a fresh domain.
