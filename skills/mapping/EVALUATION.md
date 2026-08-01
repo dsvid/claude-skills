@@ -127,6 +127,45 @@ Derived from where each has actually failed, not from what each aspires to.
 per run, including the runs that went fine** — a fix is not validated by the
 session that wrote it.
 
+### Planned: runs 3 and 4, testing the 2026-08-01 fixes
+
+**Human's plan, 2026-08-01: re-run the oracle subject first, then a completely
+different repo with no oracle.** Both are worth running, and they test
+**different things** — do not merge their results into one verdict.
+
+**Run 3 — the same subject, scoreable against the existing key.** Directly
+comparable to the 4/17/0 baseline. ⚠ Confound: the fixes were written by an
+agent that had read the key. **Reduced but not removed** — the specs were
+de-specified afterwards, so no worked example now names the subject, the domain
+or a matching figure. What survives is that the *rules* were chosen knowing
+where this subject's gaps were.
+
+**Run 4 — a different repo, no answer key.** 🛑 **"No oracle" does not mean
+"not scoreable."** It cannot measure **coverage** — nothing tells you what it
+missed, which is exactly how run 2 failed. It measures two other things well:
+
+1. 🎯 **Process — all four 2026-08-01 fixes are observable without knowing
+   whether the map is true.** This is the point: they are process fixes, so
+   they are testable process-side, on any subject.
+   - Did the **cheap-band gate** fire — did it stop and ask before handing over?
+   - Given a *"what exists"* direction, did it **enumerate completely**, or
+     present a partial list as whole?
+   - Do **one-call resolvers sit in the cheap band** of the register?
+   - Did a **referral to an undispatched agent** get a late dispatch or a
+     named mention in the hand-over?
+2. **Precision, by spot-check.** Sample ~8 claims at random and verify each
+   against source. Yields a defensible precision estimate with no key at all.
+   **`WRONG` is the number that matters, and it needs no oracle** — only the
+   source.
+
+⇒ **Run 3 answers "did the score move?". Run 4 answers "do the rules fire on a
+subject they were not written against?".** Neither answers the other.
+
+✅ **Cheapest way to give run 4 an oracle after all: pick a repo the human knows
+cold and have them write 5-8 rows before the run.** A small key is ~20 minutes
+and converts run 4 from a process test into a real correctness test. **Do not
+write the key after seeing the map** — that is not a key.
+
 ### 🛑 Running it safely — the map must not land in a repo the human does not own
 
 **Ruled 2026-08-01 by the human**, before the first run against a real codebase:

@@ -151,8 +151,8 @@ oblige you to **count the whole set**, at **R0** if that is all you can afford.
 **Enumerate completely, then read selectively.** The anti-browse rule bounds
 what you *read in depth*; it never bounds what you *count*.
 
-⚠ **This misfire is measured, not hypothetical.** A scored run named 6 of an
-organisation's 13 repositories, filed *"enumerate the rest"* as an open
+⚠ **This misfire is measured, not hypothetical.** A scored run named fewer than
+half of an organisation's repositories, filed *"enumerate the rest"* as an open
 question, and compiled — while its direction explicitly asked what related
 repositories existed. The full listing was **one API call** away. **A third of
 the run's scored misses hung off that uncounted listing, including two of its
