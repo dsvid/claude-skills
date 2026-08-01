@@ -146,7 +146,7 @@ supersedes:
 ```
 
 **Key entries by the question, not by the document.** *"What is the build
-route?"* is a topic; *"F010"* is not. Staleness happens at claim level, so an
+route?"* is a topic; *"`FINDINGS.md`"* is not. Staleness happens at claim level, so an
 index keyed by document cannot repoint at the granularity where the problem
 lives.
 

@@ -151,13 +151,14 @@ oblige you to **count the whole set**, at **R0** if that is all you can afford.
 **Enumerate completely, then read selectively.** The anti-browse rule bounds
 what you *read in depth*; it never bounds what you *count*.
 
-⚠ **This misfire is measured, not hypothetical.** A run against xemu stopped at
-6 of 13 repos in an organisation whose full listing was one API call away, and
-filed the rest as an open question — while its direction explicitly asked what
-related repos existed. **7 oracle rows, including 2 of 4 must-have rows, hung
-off that uncounted listing.** A partial enumeration presented against a
-"what exists" direction reads as complete, and is the one incompleteness the
-reader cannot detect.
+⚠ **This misfire is measured, not hypothetical.** A scored run named 6 of an
+organisation's 13 repositories, filed *"enumerate the rest"* as an open
+question, and compiled — while its direction explicitly asked what related
+repositories existed. The full listing was **one API call** away. **A third of
+the run's scored misses hung off that uncounted listing, including two of its
+four must-have facts.** A partial enumeration presented against a "what exists"
+direction reads as complete, and is the one incompleteness the reader cannot
+detect.
 
 ## 4. Breadth before depth
 
@@ -218,7 +219,8 @@ unexpected: <free text — anything noticed that the direction did not ask for.
 `resolved_by` is the deliverable, and a resolver nobody can price is a resolver
 nobody runs. **State it as a concrete operation — the actual command, query or
 request** — so that reading it tells you what it costs. *"Investigate the
-build system"* is not a resolver; `read subprojects/genconfig.wrap` is.
+build system"* is not a resolver; *"read `subprojects/foo.wrap` and record the
+URL it points at"* is.
 
 🛑 **The band is how many calls and how long. It is never "local vs external",
 "code vs web", or "in scope vs out of scope."** A single non-mutating request is
@@ -345,8 +347,9 @@ every resolver that is a single cheap, non-mutating operation** (§5). Then stop
 and put them to the user, with what each would buy:
 
 > *3 open questions resolve in one call each: enumerate the org's repos
-> (`gh api orgs/X/repos`); read `subprojects/genconfig.wrap`; grep the remaining
-> workflows for test steps. ~2 minutes total. Run them, or hand over as-is?*
+> (`gh api orgs/<org>/repos`); read the dependency manifest for the URL it
+> points at; grep the remaining CI workflows for test steps. ~2 minutes total.
+> Run them, or hand over as-is?*
 
 **This is the one gate in the skill, and it is placed here deliberately.** At
 §0 nobody — you or the user — knows what the survey will fail to reach; that
