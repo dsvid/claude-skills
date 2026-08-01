@@ -134,6 +134,52 @@ exercise, and the part that must not be graded on vibes:
 **4. Record the result as a row in `EVALUATION.md` § Scores so far** — including
 if it goes fine. A fix is not validated by the session that wrote it.
 
+## How to run it — the runbook
+
+**Setup, once, in the human's terminal.** A neutral repo they own, with the
+subject cloned inside it and gitignored:
+
+```bash
+mkdir -p ~/git_repos/xemu-architecture-map/subject
+cd ~/git_repos/xemu-architecture-map
+git init
+printf 'subject/\n' > .gitignore
+git clone --depth 200 https://github.com/xemu-project/xemu.git subject/xemu
+```
+
+🛑 **Do not survey `~/git_repos/xemu`.** Its `origin` is the real upstream and it
+is the human's build/benchmark working copy — it carries the instrumented branch
+the PGR1 measurements come from. 🛑 **And do not survey
+`the-xemu-cartographer/upstream/xemu` either**: it sits inside the repo this run
+must be blind to.
+⚠ `--depth 200` means history older than ~200 commits is invisible; that is
+fine for architecture, and it is why row A2's 2021 commit is `T-should`, not
+`T-must`.
+
+**The run: a NEW session, started in `~/git_repos/xemu-architecture-map`.** Being
+in a different directory is what makes it blind — the source exercise's
+`CLAUDE.md`, findings and memories never load.
+
+1. `/surveyor` with this direction, verbatim:
+
+   > *"What is xemu's system architecture, and what related repositories exist
+   > for testing, validation and performance profiling? Subject:
+   > `subject/xemu`. Write the map to `map/` in this repo."*
+
+2. **When it asks what is already known** (`surveyor` §2 requires it):
+   answer **"nothing — treat this as a cold read."** 🛑 **Do not paste anything
+   from the source exercise into that session.** One sentence of prompting is
+   enough to void the whole test.
+3. **When `cartographer` asks about an incumbent entry point** (§1): there is
+   none. It **replaces**, and that answer goes in `map/README.md`.
+4. `/cartographer` over the emitted records, then `/visualiser` if wanted.
+5. **Bring `map/index.md` back and score it against this file.**
+
+⚠ **Expect this to be a large run.** The direction is broad and `surveyor` fans
+out; xemu is a QEMU fork. If it needs bounding, bound it by **area** — say which
+areas to leave blank — **not by depth**, since resolution level is a recorded
+field and blank is drawn as blank.
+
 ## What this run still cannot test
 
 - **Adjudication.** The key scores precision and coverage. It cannot score
