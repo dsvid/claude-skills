@@ -189,6 +189,18 @@ asked the question has already moved on.
 
 - **Rank them by cost**, cheapest first. "Recompute this from data already on
   disk" and "run a three-week experiment" must not be adjacent and undifferentiated.
+- 🛑 **Price by the operation, never by its category.** The band is *how many
+  calls and how long* — **not** "local vs external", "code vs web", or "in scope
+  vs out". **One non-mutating call is cheap wherever it lives.** Do not inherit
+  a record's own banding uncritically: **re-price each resolver as you ingest
+  it**, because you are the last reader before the human, and the band is what
+  they will believe.
+  ⚠ **Measured:** a compile carried *"direct fetch of the org's repository
+  listing"* into its **most expensive band, 34th of 35** — one API call, ~2
+  seconds, and the highest-value unresolved item in the whole register.
+- 🎯 **Surface the cheap band at the top of the hand-over, not just in the
+  file.** A register whose first tier is *"three things, one call each"* gets
+  acted on; the same three at position 34 do not.
 - **Carry `resolved_by` verbatim.** A question without its resolver is a
   complaint. **The resolver is the deliverable.**
 - ⚠ **A question the compile *created* counts too** — anything you marked

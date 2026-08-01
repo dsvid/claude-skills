@@ -113,6 +113,24 @@ Require back, in ~15 lines: where the records were written, counts by status, an
 **only the exceptions** — what is contested, what could not be determined, what
 was unexpected. Everything else is in the file, and you can read it if you need it.
 
+### 🛑 Read the returned exceptions for **referrals**, and dispatch late
+
+**The fan-out is chosen at the moment of least knowledge.** You pick the
+subjects before anyone has read anything; a subject discovered *during* the run
+has nowhere to go, because every agent has been told to stay in its lane and
+another agent is covering the rest.
+
+**So when an exception refers work to someone — "worth a closer look by whoever
+is mapping X" — check that X was actually dispatched.** If nobody owns it,
+**you decide: dispatch a late agent, or record it and say so in the hand-over.**
+Either is fine. **Silently compiling is not** — the referral was addressed to a
+recipient you are responsible for creating.
+
+⚠ **Observed failure:** a sub-agent wrote *"worth a closer look by whichever
+agent is mapping the overall testing/validation story."* No such agent existed,
+the orchestrator compiled anyway, and the referral pointed at the single
+highest-value subject in the whole run.
+
 ### Give each one a scope, and mean it
 
 Say **which material is theirs and that the rest belongs to other agents.**
@@ -125,6 +143,21 @@ question. They may not go and read around.
 **Follow references; do not browse.** Survey what the material actually points
 at — what the code imports, what the docs cite, what the issues link. A
 plausible-sounding name in a listing is not a reference.
+
+🛑 **Carve-out: when the direction asks what *exists*, the enumeration is the
+deliverable and a listing is a source.** *"What related repos exist for
+testing"*, *"which services depend on this"*, *"what tooling is there"* — these
+oblige you to **count the whole set**, at **R0** if that is all you can afford.
+**Enumerate completely, then read selectively.** The anti-browse rule bounds
+what you *read in depth*; it never bounds what you *count*.
+
+⚠ **This misfire is measured, not hypothetical.** A run against xemu stopped at
+6 of 13 repos in an organisation whose full listing was one API call away, and
+filed the rest as an open question — while its direction explicitly asked what
+related repos existed. **7 oracle rows, including 2 of 4 must-have rows, hung
+off that uncounted listing.** A partial enumeration presented against a
+"what exists" direction reads as complete, and is the one incompleteness the
+reader cannot detect.
 
 ## 4. Breadth before depth
 
@@ -179,6 +212,28 @@ unexpected: <free text — anything noticed that the direction did not ask for.
              not promote it to one. If it is falsifiable, it belongs in
              `claims:` with full fields — see rule 4>
 ```
+
+### 🛑 Price a `resolved_by` by the operation, never by its category
+
+`resolved_by` is the deliverable, and a resolver nobody can price is a resolver
+nobody runs. **State it as a concrete operation — the actual command, query or
+request** — so that reading it tells you what it costs. *"Investigate the
+build system"* is not a resolver; `read subprojects/genconfig.wrap` is.
+
+🛑 **The band is how many calls and how long. It is never "local vs external",
+"code vs web", or "in scope vs out of scope."** A single non-mutating request is
+**cheap wherever it lives** — one API call, one fetch, one `git show` all cost
+seconds and belong in the same band as a grep.
+
+⚠ **Measured failure:** a run filed *"direct fetch of the org's repository
+listing"* in its **most expensive band, 34th of 35 items**, because the resolver
+left the machine. It was one API call, roughly two seconds, and the cheapest
+unresolved item in the register — and its output held the run's single most
+valuable finding. **Nothing downstream could rescue it: the compiler, and the
+human, both read the band and believed it.**
+
+**If a resolver turns out to be one cheap call, you are the last honest place to
+notice** — see §7.
 
 ### Provenance tiers — record the highest that honestly applies
 
@@ -282,6 +337,32 @@ most and checked least — tends not to. **The novel claim needs it more.**
      of being wrong is not recoverable by you.**
 
 ## 7. Hand over
+
+### 🛑 First: the cheap-band gate. Show what one more step buys, and ask
+
+**Before handing over, re-read your own `not_determined` entries and pull out
+every resolver that is a single cheap, non-mutating operation** (§5). Then stop
+and put them to the user, with what each would buy:
+
+> *3 open questions resolve in one call each: enumerate the org's repos
+> (`gh api orgs/X/repos`); read `subprojects/genconfig.wrap`; grep the remaining
+> workflows for test steps. ~2 minutes total. Run them, or hand over as-is?*
+
+**This is the one gate in the skill, and it is placed here deliberately.** At
+§0 nobody — you or the user — knows what the survey will fail to reach; that
+knowledge exists only now. **Asking how broad to go at the start cannot fix a
+gap that does not exist yet.**
+
+- ✅ **If the user says go, run them and fold the results into the records** as
+  ordinary claims with full provenance. **Bounded: one round.** Their results
+  authorise no further calls — a survey that resolves its own findings
+  recursively has stopped surveying.
+- ✅ **If they say hand over as-is, that is a fine answer** and the entries stay
+  `not_determined`. The point is that a human priced it, not that it got done.
+- 🛑 **Never skip the gate because the list looks small.** The item most likely
+  to be on it is the one you mis-filed as expensive.
+
+### Then hand over
 
 Emit the records to the map location and tell the user, in two or three lines:
 what was surveyed, at what resolution, what is blank, and **what the direction

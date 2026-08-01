@@ -398,3 +398,35 @@ addressed to a subject nobody had been assigned.
 *"what related repos exist for testing, validation and performance profiling"* —
 **mandates an enumeration**, and that is knowable at t=0 from the direction
 alone. See the anti-browse carve-out proposed in the scoring doc.
+
+### ✅ APPLIED 2026-08-01 — four edits, and what run 2 must show
+
+The three fixes above are now in the specs. **The pre-registration for the next
+run is here, written before it happens.**
+
+| Edit | Where | Predicted effect |
+|---|---|---|
+| **Anti-browse carve-out** — a "what exists" direction obliges a complete enumeration, at R0 if need be | `surveyor` §3 | The org listing gets counted. **Falsified if run 2 again reports a partial org enumeration as if complete** |
+| **Referral check + late dispatch** — an exception addressed to an agent nobody dispatched is the orchestrator's to resolve | `surveyor` §3 | A discovered subject gets an owner, or gets named in the hand-over |
+| **Price by the operation, not the category** | `surveyor` §5 + `cartographer` §5b | One-call resolvers land in the cheap band. **Falsified if anything resolvable by a single call lands below the cheap tier again** |
+| **The cheap-band gate — show one-call resolvers and ask** | `surveyor` §7 | The human prices it, once, with the list in front of them |
+
+🛑 **Confound to respect when scoring run 2.** These edits were written by an
+agent that had just read the answer key, and they name the xemu org enumeration
+**explicitly, as a worked example**. A run against xemu therefore cannot show
+the rules generalise — it can only show they fire at all. **The stronger test is
+run 2 on a different subject**, where nothing in the spec points at the answer.
+Same defect as `EVALUATION.md` row 2 (*"a rule that fires when the agent knows
+it is being marked is not shown to fire otherwise"*), and it is now twice in a
+row — worth treating as a standing property of self-scored runs, not an
+incident.
+
+⚠ **Cost of the edits: `surveyor/SKILL.md` 291 → ~360 lines.** Four rules added
+to a spec read in full on every run. If the next scoring shows no movement,
+**cut them rather than adding a fifth.**
+
+⚠ **Not fixed, deliberately:** the declaration-vs-definition gap (oracle rows
+A1, A3, A5 — read the struct, never the thread body or the lock sites). It is
+3 rows, and every phrasing reduces to *"read more of the code"*, which is not a
+rule. **Left open.** If run 2 misses those rows again with the four fixes in
+place, that is the evidence that it needs its own mechanism.
