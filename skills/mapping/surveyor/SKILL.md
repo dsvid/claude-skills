@@ -254,6 +254,22 @@ most and checked least — tends not to. **The novel claim needs it more.**
    fix.** The artefacts you are most tempted to correct are the ones the human
    relies on most, and a survey that quietly rewrites its own subject has
    destroyed the evidence for its own findings.
+8. 🛑 **Never run a `git` command that writes.** Read-only git is one of the
+   survey's best instruments — `log`, `show`, `blame`, `diff`, `ls-files`,
+   `rev-parse`. **`commit`, `add`, `checkout`, `switch`, `branch`, `stash`,
+   `merge`, `rebase`, `reset`, `restore`, `clean`, `tag`, `push` are not** — in
+   the surveyed repo or any other.
+   - **The territory is usually a repo the human does not own**, whose `origin`
+     may be a real upstream, and whose working tree may hold uncommitted work or
+     a branch that is load-bearing somewhere else.
+   - 🛑 **A `checkout` is a mutation.** "Just look at `main`" can discard
+     uncommitted state and move a branch the human was in the middle of.
+   - 🛑 **Committing map files into the surveyed repo is the specific accident
+     to avoid.** It puts your output in someone else's history, one `push` from
+     being public and attributed to them.
+   - **If the map location would sit inside the surveyed repo, say so and ask
+     for somewhere else.** If you need another revision, ask the human for a
+     worktree or a second clone — **do not make one by moving theirs.**
 
 ## 7. Hand over
 

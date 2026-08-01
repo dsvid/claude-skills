@@ -126,6 +126,47 @@ Derived from where each has actually failed, not from what each aspires to.
 per run, including the runs that went fine** — a fix is not validated by the
 session that wrote it.
 
+### 🛑 Running it safely — the map must not land in a repo the human does not own
+
+**Ruled 2026-08-01 by the human**, before the first run against a real codebase:
+*"It is a good point that it could potentially commit a map to a repo that I
+don't own."* ⇒ All three `SKILL.md` files now carry a rule: **read-only git
+only** — `log`/`show`/`blame`/`diff`/`rev-parse` yes, **every writing verb no**,
+including `checkout`.
+
+Two failure modes it prevents, both cheap to hit and expensive to undo:
+
+- **The map committed into the surveyed repo.** Your output in someone else's
+  history, one `push` from being public and attributed to them.
+- **`git checkout main` to "just look at it."** A mutation. It can discard
+  uncommitted work and move a branch the human was mid-way through — and on a
+  repo that doubles as a build or benchmark working copy, that branch may be the
+  only thing that can reproduce their measurements.
+
+⇒ **Survey a read-only copy, write the map somewhere neutral, and if the map
+location would sit inside the surveyed repo, stop and ask.**
+
+### 🧭 If you have no domain with an oracle
+
+The common case, and it does not block evaluation. Three routes, cheapest first:
+
+1. **Test E needs no oracle** — it needs a decision you actually have to make.
+   Pre-register what you would have concluded without the map.
+2. **Test C needs no oracle** — two independent cold surveys, same direction.
+   Adjudicate only the diff. Where they disagree, at least one is confabulating.
+3. **Manufacture one by time-travel.** Survey a repo **at an old commit**, then
+   score against what the project actually did next — the fix that landed, the
+   release notes, the issue that closed. The answer key is withheld *by
+   construction* rather than by discipline, and it is free.
+   ⚠ It also happens to be the exact shape of the retrospective eval
+   the-xemu-cartographer exists to scope, so it doubles as a dry run of that.
+
+**Or the case that turned up here:** a domain where **you have already
+established facts the hard way**. Twelve sessions of measurement against xemu
+produced an answer key nobody set out to write.
+⇒ **`ORACLE-xemu-architecture.md`** — written before the run, tiered, with the
+two headline questions and an explicit statement of what it cannot score.
+
 ### 🎯 The next run to do, and it is not the fresh repo
 
 **Test E is free, is owed anyway, and outranks A–D.** the-xemu-cartographer's

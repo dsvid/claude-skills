@@ -96,6 +96,12 @@ more easily than any other output**, and a diagram pasted into a document nobody
 re-renders becomes a confident stale picture the moment the index moves. Offer
 the human the file; let them place it.
 
+🛑 **And never run a `git` command that writes** — `commit`, `add`, `checkout`,
+`branch`, `stash`, `reset`, `restore`, `clean`, `push` — in the mapped repo or
+any other. **Rendering is read-only work.** The repo you are drawing is often
+one the human does not own; committing a diagram into it puts your output in
+someone else's history, one `push` from being public and attributed to them.
+
 ## 6. Report what you could not draw
 
 Finish by naming, in a line or two:
