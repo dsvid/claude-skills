@@ -522,3 +522,28 @@ and nothing acted on them.** A sentence is not a budget; a recorded reach is.
 is also the expensive one. **If every run answers `both`, the field has bought
 nothing** — the test is whether outward reach changes what the fan-out actually
 dispatches, not whether it changes what the record says.
+
+### Compression pass, 2026-08-01 — before run 3, not after
+
+**Reversed the earlier "consolidate after run 3" note, but only for one half of
+it.** The distinction that was missing:
+
+- ✅ **Compression that preserves every rule** — cut repetition, shorten
+  evidence, tighten prose. **Does not change what fires, and reduces the
+  spec-bloat confound.** Safe before a run, and done now.
+- 🛑 **Consolidation that merges or drops rules** — changes the thing under
+  test. **Still deferred to after run 3**, when per-rule observation says which
+  ones fired.
+
+**Result: 458 → 419 lines. The six sections added today went ~150 → ~110.**
+The main win was real repetition: *"an outward clause in the direction did not
+survive to the fan-out"* had been argued in **three** places, and is now argued
+once at §0 with the other two pointing back.
+
+⚠ **Be honest about the size of the win: ~8%.** The file is still **44% larger
+than this morning**, and the remaining bulk (§5 schema, §6 rules) is
+pre-existing and not obviously cuttable. **Compression alone will not undo the
+growth — only merging or dropping rules will, and that needs run 3's data.**
+
+✅ **Verified after compressing: every rule still present**, by grepping one
+phrase per fix, and no domain names leaked back in.
