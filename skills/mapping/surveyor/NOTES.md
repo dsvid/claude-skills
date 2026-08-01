@@ -484,3 +484,41 @@ version control**, and it is the same one API call.
 movement, cut them rather than adding a fifth.** ⇒ **If a fifth is added, it
 should be this one and not the `parent` rule** — same cost, strictly wider
 coverage. Decide after run 3, not before.
+
+### ✅ APPLIED — **reach** as a first-class §0 question (human's design, 2026-08-01)
+
+*"Where it goes out should depend on the remit given upfront. It should ask me
+if I want to map this repo's architecture, or if identifying the ecosystem of
+supporting repos is part of the survey."*
+
+⇒ **§0 now asks two questions, not one: the direction, and the reach**
+(`inward` / `outward` / `both`), recorded as a schema field.
+
+🎯 **This resolves three open problems at once, which is why it earned a §0 slot
+rather than a fifth rule:**
+
+1. **It corrects a claim made earlier in this file.** I argued breadth cannot be
+   front-loaded because the gaps do not exist yet at t=0. **True of *which*
+   gaps; false of the *axis*.** Inward-vs-outward is knowable at the start and
+   is the user's to decide. §7's gate still handles the unknowable half — the
+   two are complementary, not competing.
+2. **It gives the anti-browse carve-out a principled trigger.** The carve-out
+   previously keyed off *parsing the direction's wording* for "what exists",
+   which is brittle. **It now keys off a recorded scope decision.** Net line
+   cost near zero — it replaced the carve-out rather than adding to it.
+3. 🎯 **It converts the contributor-graph proposal from a fifth rule into the
+   *content* of a scope the user chose.** The standing note — *cut before adding
+   a fifth* — is respected: under `inward` these moves are forbidden, so they
+   cost nothing; under `outward` they are the substance of what was asked for.
+
+🛑 **The evidence that a prose clause is not enough:** the scored run's direction
+*explicitly* said *"and what related repos, workflows, or tooling exist for
+testing, validation, and performance profiling."* It surveyed the subject at R2
+across 12 records and its ecosystem at **R1, from web-search snapshots, in one
+record**. **The words were in the brief, verbatim, in every sub-agent's file,
+and nothing acted on them.** A sentence is not a budget; a recorded reach is.
+
+⚠ **What to watch on run 3:** `both` is the honest answer to most directions and
+is also the expensive one. **If every run answers `both`, the field has bought
+nothing** — the test is whether outward reach changes what the fan-out actually
+dispatches, not whether it changes what the record says.

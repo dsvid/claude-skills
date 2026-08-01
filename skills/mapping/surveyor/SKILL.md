@@ -26,6 +26,36 @@ Record the direction with the records you emit. **If the direction changes
 later, the survey re-fires** — a map aimed at an old question is worse than no
 map, because it looks current.
 
+### 🛑 Then ask the second question: **how far out does this reach?**
+
+**The direction says what to answer. The reach says how far to go to answer
+it** — and they are genuinely separate decisions the user is entitled to make.
+**Ask it explicitly and record it beside the direction.** Offer three:
+
+| Reach | What is in scope | Typical ask |
+|---|---|---|
+| **Inward** | The subject itself — its architecture, structure, internals, how its parts relate | *"map this repo"* |
+| **Outward** | The **ecosystem around it** — sibling and satellite repos, the people who build it, the tools, test suites, results corpora and downstream consumers that exist elsewhere | *"what else is out there that bears on this?"* |
+| **Both** | The subject **and** its surroundings, at stated resolutions — the common answer, and the expensive one | *"what is this and what surrounds it?"* |
+
+🛑 **A clause inside the direction is not a reach, and does not survive to the
+fan-out.** Measured: a run whose direction explicitly asked *"what related repos
+exist for testing, validation and profiling"* surveyed the subject thoroughly
+and its ecosystem barely at all. **The words were there and nothing acted on
+them.** Reach is a separate recorded field because a sentence is not a budget.
+
+**Reach is what authorises spending, and what forbids it.**
+
+- **Inward** ⇒ do **not** spend calls going outward. Note what you see pointing
+  out, as `not_determined`, and stop.
+- **Outward** ⇒ the enumeration and person-tracing moves in §3 are **obliged,
+  not optional**, and the fan-out is wider — price it before dispatching (§3).
+
+⚠ **Ask once, at the start.** ✅ **This is the one breadth question that IS
+front-loadable.** *Which* gaps a survey will fail to reach is unknowable now —
+that is what §7's gate is for. **Which direction it should travel is knowable
+now, and only the user can say.**
+
 ## 1. Find the map, and read its conventions
 
 Ask where the map lives, or find it: a `map/` directory, an `_inventory`, an
@@ -144,21 +174,40 @@ question. They may not go and read around.
 at — what the code imports, what the docs cite, what the issues link. A
 plausible-sounding name in a listing is not a reference.
 
-🛑 **Carve-out: when the direction asks what *exists*, the enumeration is the
-deliverable and a listing is a source.** *"What related repos exist for
-testing"*, *"which services depend on this"*, *"what tooling is there"* — these
-oblige you to **count the whole set**, at **R0** if that is all you can afford.
-**Enumerate completely, then read selectively.** The anti-browse rule bounds
-what you *read in depth*; it never bounds what you *count*.
+### 🛑 Outward reach (§0): enumerate completely, then read selectively
 
-⚠ **This misfire is measured, not hypothetical.** A scored run named fewer than
-half of an organisation's repositories, filed *"enumerate the rest"* as an open
-question, and compiled — while its direction explicitly asked what related
-repositories existed. The full listing was **one API call** away. **A third of
-the run's scored misses hung off that uncounted listing, including two of its
-four must-have facts.** A partial enumeration presented against a "what exists"
-direction reads as complete, and is the one incompleteness the reader cannot
-detect.
+**When the reach is outward, the anti-browse rule above does not bound you — it
+bounds what you read *in depth*, never what you *count*.** A "what else is out
+there" remit obliges the **whole set**, at **R0** if that is all you can afford.
+
+**The territory does not point at itself.** Measured on a scored run: the
+subject's source contained **zero** references to the ecosystem that owned its
+test suite, its golden corpus, its tracer **and its benchmark harness**. *None
+of it was reachable by following references.* **Outward reach needs its own
+moves, and these are the cheap ones — one call each:**
+
+1. **Enumerate the owning organisation or namespace in full.** Not the six you
+   happened to hear about. ⚠ A partial enumeration presented against a "what
+   exists" remit **reads as complete**, and is the one incompleteness the reader
+   cannot detect.
+2. 🎯 **Rank the people, then follow them.** Who builds this? What else do they
+   build? An ecosystem is usually **one or two individuals' other repositories**,
+   and nothing in the subject links to them.
+   🛑 **Scope the ranking to what the subject itself added.** On a fork, a
+   whole-repo contributor list is the *upstream's* — measured: the ecosystem's
+   author ranked **84th** across the tree and **2nd** across the fork's own
+   directories. One flag, decisive difference.
+   ⚠ **Merge identities before ranking** (the same person appeared twice under
+   two emails), and note that a `<login>@users.noreply...` address hands you
+   their account name directly.
+3. **Resolve forks to their parent.** A vendored fork names the upstream it came
+   from, and that is a reference, not a listing.
+4. **Then filter the result by the direction** — by what each thing *is*, from
+   its description. **This is the point where you stop enumerating and start
+   choosing**, and it is the only place browsing is a real risk.
+
+⚠ **Under inward reach, do none of this.** Record what you notice pointing
+outward as `not_determined` and leave it. **The user priced this at §0.**
 
 ## 4. Breadth before depth
 
@@ -185,6 +234,9 @@ field names.
 ```yaml
 record: <subject-slug>
 direction: <the one-sentence direction this was surveyed against>
+reach: inward | outward | both   # §0 — recorded so a later reader knows
+                                 # whether a blank ecosystem was a finding
+                                 # or simply out of scope
 surveyed: <YYYY-MM-DD>
 resolution: R0 | R1 | R2 | R3
 subject:
