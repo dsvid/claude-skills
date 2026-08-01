@@ -393,3 +393,31 @@ That is a lot of spec for one scored run's worth of evidence. **Standing note:
 after run 3, consolidate before adding anything further** — several of today's
 additions overlap (§0 reach, §3 outward playbook, §7 gate all bear on breadth)
 and could likely be one shorter section.
+
+---
+
+## Run 3, 2026-08-01 — `reach: both` is not free
+
+Score: `SCORE-xemu-architecture-2026-08-01-run3.md`.
+
+**Outward breadth went up; inward depth went down, on the same subject and the
+same key.** Rows A1 (which thread renders), A3 (the pgraph locks) and B3 (the
+surface→texture gate) were all scored *MISS (near)* in run 2 — the map had
+reached the right neighbourhood. **In run 3 all three are absent entirely.**
+Meanwhile the outward half gained the abaire ecosystem at R2.
+
+`BRIEF.md` mandated `both`, so this is not the skill choosing badly. It is the
+budget being spent, and **nothing in the output shows where it went.**
+`areas.md` records reach per area and a pass log — it does **not** record that
+inward resolution on `hw-xbox` came in lower *because* outward ran in the same
+pass.
+
+⇒ **The design already has the answer and the run did not use it:** *"passes are
+additive — inward now, outward later."* One pass doing both is the case that
+rule exists to prevent, and a brief can currently override it silently.
+
+**Candidate, not yet a rule:** when a direction asks for `both`, `surveyor` §0
+should say what a single combined pass costs and offer to split it — and if it
+runs combined anyway, `areas.md` should carry the tradeoff as a line, not leave
+the reader to diff two runs to find it. ⚠ **One data point.** Do not spec this
+before run 4.

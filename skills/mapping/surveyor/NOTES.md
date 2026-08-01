@@ -547,3 +547,59 @@ growth — only merging or dropping rules will, and that needs run 3's data.**
 
 ✅ **Verified after compressing: every rule still present**, by grepping one
 phrase per fix, and no domain names leaked back in.
+
+---
+
+## Run 3, 2026-08-01 — the gate fired, and it read the wrong half of the file
+
+Full score: `../SCORE-xemu-architecture-2026-08-01-run3.md`. **6 HIT / 15 MISS /
+0 WRONG-on-key** vs run 2's 4/17/0. Two notes belong here; the rest is scoring.
+
+### ✅ The cheap-band gate works. This is the first fix shown firing unprompted.
+
+It stopped before hand-over, priced 11 one-call resolvers at ~2 min total, and
+asked. The human said run them → `record-gate-resolutions.yml`, 10 claims,
+**4 index entries superseded**. Nothing about the gate needs changing.
+
+### 🛑 …but it only reads `not_determined:`. `unexpected:` leads are invisible to it.
+
+The same run's `open-questions.md` listed **six** free-text leads, each with a
+concrete one-call resolver, in a section headed *"Further leads"*. **None was
+dispatched.** One of them — `abaire/xemu-dev_pgraph_test_results` — turned out
+to be a live per-PR accuracy workflow used on 11 real PRs, and two `gh api`
+calls away. It was recovered by the scorer, not the run.
+
+⇒ **Fix: the §7 cheap-band gate must sweep `unexpected:` too.** The map-format
+rule *"free text may at most become a lead, never a claim"* is correct and
+should stay — but "never a claim" was silently read as "never worth resolving".
+**A lead with a one-call resolver is the cheapest claim in the register, not a
+non-claim.**
+
+### 🛑 It enumerated the org and *sampled* the person — and the sample dropped two keyed rows.
+
+`gh api users/abaire/repos --paginate` was run and cited **four times**. Two
+records (`abaire-16`, `-17`) then described a *selection* from that listing by
+description. Dropped, silently: `xemu-nxdk_pgraph_tests_results` (the hardware
+golden corpus, a **T-must** row) and `nxdk_ntrc_dyndxt` (T-should).
+
+⚠ **This is the enumeration rule satisfied in form and defeated in substance.**
+Run 2 was "one hop short — it had written the hop down". **Run 3 is zero hops
+short: the answer was in output it had already fetched.**
+
+⇒ **Fix: a record that filters an enumeration must state the filter and the
+count it dropped** — `"116 repos listed, 17 recorded, filtered by description
+for xemu/nv2a relevance"`. Then the omission is visible and priceable instead of
+invisible. **Enumerating completely and recording selectively are different
+acts and the schema currently cannot tell them apart.**
+
+### ⚠ Counting is still not fixed — it moved.
+
+Run 2: 14-vs-15 workflows, 12-vs-13 org repos. Run 3 got **both of those
+right** and produced a new one: `subprojects/*.wrap` **35, actually 36**. Worse,
+`hwxbox-3` flattened an `if/else` on a machine property into *"registers 5 SMBus
+peripherals"* — **false in all three configurations** (max 3).
+
+⇒ The miscount is a nuisance; **the flattened conditional is the failure
+signature this file already names for `surveyor` — fluency.** A claim derived
+from a branch must carry the branch. Do not add a rule yet — **two data points,
+different shapes; watch run 4.**
