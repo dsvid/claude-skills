@@ -421,3 +421,13 @@ should say what a single combined pass costs and offer to split it — and if it
 runs combined anyway, `areas.md` should carry the tradeoff as a line, not leave
 the reader to diff two runs to find it. ⚠ **One data point.** Do not spec this
 before run 4.
+
+**Diagnosed 2026-08-01 (fresh session), see `surveyor/NOTES.md`.** ⚠ *"Nothing
+in the output shows where it went"* is now answered, and the candidate above is
+**not** the fix. The budget didn't shrink — 136 claims in run 3 vs 76 in run 2 —
+it moved, `hw/xbox` 27 → 9 claims while org+abaire went 4 → 36. The mechanism is
+that **a record covering a large subject enumerates its children in prose and
+self-awards an R-level for it**, so `R2` over one file and `R2` over forty are
+indistinguishable. Two changes went in (`surveyor` §4 coverage denominator, §7
+gate reads `unexpected:` and coverage as well as `not_determined:`). **The
+combined-pass warning stays a watch item for run 4, unspecced.**

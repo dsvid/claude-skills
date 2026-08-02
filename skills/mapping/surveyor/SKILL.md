@@ -73,11 +73,16 @@ write records it cannot read.
 
 ## 2. Ask what is already known before gathering anything
 
-Check the existing index for the areas your direction touches. **It tells you two
-opposite things, and you need both.**
+Check the existing index for the areas your direction touches. **It tells you
+several opposite things, and you need all of them.**
 
 - **What to skip.** Note each area's `resolution`. **Re-surveying ground already
   covered at sufficient resolution is the single most common waste.**
+- 🛑 **What to open.** Note each area's **coverage** (§4) — `R1 · 13 listed, 0
+  opened`. **A named subject is in the map without being in the survey**, and it
+  is the cheapest work available: located already, just never read. **Where the
+  direction asks about it, this is your work list**, exactly as `resolution` is
+  your skip list.
 - 🛑 **What was never in scope.** Read the **reach** of the passes already run
   (§0). **An area missing from an `inward`-only map is unmapped, not empty** —
   and it carries no `resolution` to warn you, because no record was ever
@@ -88,8 +93,8 @@ opposite things, and you need both.**
   open-issue count, a backlog figure, a "currently failing" list. Re-checking a
   volatile claim is not waste; it is the only thing keeping the map honest.
 
-**Build both lists before gathering anything: the skip list and the re-check
-list.** A survey that only ever adds new subjects lets the map fill with
+**Build all three lists before gathering anything: skip, open, re-check.** A
+survey that only ever adds new subjects lets the map fill with
 confident stale numbers that still carry perfect provenance — which is the
 precise defect this whole format exists to prevent.
 
@@ -193,8 +198,8 @@ ecosystem owning its test suite, golden corpus, tracer and benchmark harness.
 **Four moves, one call each:**
 
 1. **Enumerate the owning namespace in full** — not the few you happened to hear
-   about. ⚠ A partial enumeration **reads as complete**, and is the one
-   incompleteness a reader cannot detect.
+   about. ⚠ A partial enumeration **reads as complete** — §4's coverage
+   denominator is what makes it detectable.
 2. 🎯 **Rank the people, then follow them.** An ecosystem is usually one or two
    individuals' *other* repositories, and nothing in the subject links to them.
    🛑 **Rank over what the subject itself added** — on a fork the whole-repo
@@ -226,6 +231,26 @@ is detail positioned against nothing.
 recorded. A guessed relation is honest at R1 and dishonest at R3, and the only
 difference is whether you wrote the level down.
 
+### 🛑 A subject with parts carries its **coverage**, not just its level
+
+**An R-level grades what is known about a subject. It says nothing about how
+much of the subject was looked at** — and a record that names forty files and
+opens one reads, on the page, exactly like a record that opened forty.
+
+**State the coverage beside the level:** `R2 · 40 engine files named, 1 opened`,
+`R1 · 13 repos listed, 0 opened`. Same discipline as §5's `n` on a derived
+statistic, turned on the survey itself.
+
+⚠ **Measured, twice in one run.** One record covering a hardware tree listed
+every engine file and opened none — at `R2`; the threading and locking rows it
+was scored against sat one file below that listing. Another put thirteen repos
+in a single `subject.name` brace-list — at `R1`; two of them were the run's
+highest-value missing rows. **Both records admitted the thinness honestly, in
+prose. Nothing downstream can read prose.**
+
+**Named is not surveyed**, and the denominator is the only thing that makes the
+difference legible — to the reader, and to §7's gate, which spends it.
+
 ## 5. The survey record — map format v1
 
 One record per subject. This is the contract `cartographer` consumes; keep the
@@ -238,7 +263,8 @@ reach: inward | outward | both   # §0 — recorded so a later reader knows
                                  # whether a blank ecosystem was a finding
                                  # or simply out of scope
 surveyed: <YYYY-MM-DD>
-resolution: R0 | R1 | R2 | R3
+resolution: R0 | R1 | R2 | R3    # §4 — and if the subject has parts, the
+                                 # coverage with it: "R2 · 40 named, 1 opened"
 subject:
   name: <what it is called>
   kind: <repo | document | service | team | dataset | …>
@@ -389,14 +415,29 @@ most and checked least — tends not to. **The novel claim needs it more.**
 
 ### 🛑 First: the cheap-band gate. Show what one more step buys, and ask
 
-**Before handing over, re-read your own `not_determined` entries and pull out
-every resolver that is a single cheap, non-mutating operation** (§5). Then stop
-and put them to the user, with what each would buy:
+**Before handing over, re-read every place the run admitted it stopped short,
+and pull out what a single cheap, non-mutating operation would close** (§5).
+🛑 **Three sources, not one:**
+
+- **`not_determined:` resolvers** that price as one cheap call.
+- **`unexpected:` leads naming a concrete target** — a repo, a file, a URL.
+  They carry no `resolved_by`, so **nothing else in the format will ever look
+  at them.**
+- **Coverage shortfalls** (§4) — what a record named and did not open, where
+  the direction asks about it directly.
+
+Then stop and put them to the user, with what each would buy:
 
 > *3 open questions resolve in one call each: enumerate the org's repos
 > (`gh api orgs/<org>/repos`); read the dependency manifest for the URL it
-> points at; grep the remaining CI workflows for test steps. ~2 minutes total.
-> Run them, or hand over as-is?*
+> points at; grep the remaining CI workflows for test steps. Plus 13 repos
+> named-and-unopened under one owner, 2 of which the direction asks about.
+> ~2 minutes total. Run them, or hand over as-is?*
+
+⚠ **Measured:** the gate fired, the human said go, eleven resolvers ran and four
+index entries were superseded — and **in the same file, six `unexpected:` leads
+with one-call resolvers went unread, one of them the run's single most valuable
+finding.** A gate reading one field of three is a gate on a third of the map.
 
 **Placed here deliberately** — §0 settles which *direction* to travel; only now
 does anyone know what the run actually failed to reach.

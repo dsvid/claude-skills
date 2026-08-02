@@ -603,3 +603,108 @@ peripherals"* — **false in all three configurations** (max 3).
 signature this file already names for `surveyor` — fluency.** A claim derived
 from a branch must carry the branch. Do not add a rule yet — **two data points,
 different shapes; watch run 4.**
+
+---
+
+## Run 3 diagnosis, 2026-08-01 (fresh session) — *named is not surveyed*
+
+Brief: `../DIAGNOSE-run3-misses.md`. Cause, with evidence, and two spec changes
+(§4 coverage denominator, §7 gate reads three sources).
+
+### 🛑 Correction: nothing was filtered. D2 and D6 were **recorded and buried.**
+
+The earlier note above says `abaire-16`/`-17` *sampled* the listing and dropped
+two keyed repos. **False, and worth correcting** — both are present:
+`record-abaire-ecosystem.yml:319` puts `xemu-nxdk_pgraph_tests_results` and
+`nxdk_ntrc_dyndxt` inside one record's `subject.name` brace-list of 13 repos.
+The record is `R1` and says so honestly (*"not individually deep-dived;
+descriptions taken at face value"*). `areas.md` thin-area **#6** says it again:
+*"~21 repos — named and one-line-described only, never individually opened."*
+
+⇒ **The proposed "state the filter and its drop count" rule would not have
+fired**, because there was no filter. The map declared its own gap twice, in
+prose, and `grep ntrc index.yml` returns **nothing** — the index gained no topic
+for either repo. **A group record collapses N subjects into one and the reader-
+facing surface never learns they exist.**
+
+### The same shape, inward, is what regressed A1 / A3 / B3
+
+| | Run 2 | Run 3 |
+|---|---|---|
+| Records over `hw/xbox` | **4** (`nv2a-gpu`, `mcpx-apu`, `mcpx-nvnet`, `xbox-platform`) | **1** (`hw-xbox`) |
+| Claims over that territory | **27** | **9** |
+| Their provenance | `nv2a_int.h:70-110`, `:96-106`, `nv2a.c:334,573-586`, `trace-events:1-30` | `ls hw/xbox/nv2a/`, `ls hw/xbox/mcpx/…`, `ls pgraph/` — **6 of 9 are directory listings** |
+| Self-assessed | `R2` | `R2` |
+
+Run 2 found PFIFO's `QemuThread` and its mutex **because nv2a had its own
+agent**. Run 3's single record had to cover nv2a + mcpx + platform + SMBus in
+nine claims and spent them on the file inventory. **A1/A3/B3 are one file below
+that inventory in both runs.**
+
+✅ **Kills hypothesis 1 as stated.** The budget did not shrink: run 3 wrote
+**136** claims to run 2's **76**, both across 12 records. It *moved* — `hw/xbox`
+27 → 9 while org+abaire went 4 → 36. `reach: both` is where it went, but the
+mechanism is the partition, not the reach.
+
+✅ **Kills hypothesis 5's disconfirmer.** `R2` does **not** mean the same thing
+in two run-3 records: `ui-xui` at R2 read `debug.cc` and `debug.h` line by line
+(and won C1); `hw-xbox` at R2 verified a directory listing. **Same label, 4× the
+territory, no way to tell.**
+
+### ⇒ One cause
+
+**A record's subject is a name, not a bounded territory.** When a subject has
+many children the record enumerates the children *in prose*, self-awards an
+R-level for the enumeration, and **nothing downstream can distinguish "23 things
+named" from "23 things surveyed."** Grouping is what hides it; honesty in the
+prose does not help, because §7's gate reads `not_determined:` and nothing else.
+
+**Fix 1 (§4)** puts a denominator on it — `R1 · 13 repos listed, 0 opened`.
+**Fix 2 (§7)** spends it, alongside the `unexpected:` leads the gate was already
+missing. The two compose: one produces the number, the other acts on it.
+
+### Watch, do not spec (one data point each)
+
+- **Fan-out grain.** 4 records → 1 over the same territory is the proximate
+  cause of the inward regression, but the brief mandated `both` and the
+  orchestrator partitioned by topic noun. **If run 4 with the coverage
+  denominator still collapses a large area into one agent, that is the rule to
+  write** — one record per territory a single agent can open, not per noun.
+- **The flattened conditional** (`hwxbox-3`, 5 SMBus peripherals vs max 3) is
+  the fluency signature, unchanged, and note *which record it came from*: the
+  one that never opened the file. **Enumeration-depth and confident-prose may be
+  the same defect**, not two.
+
+### The coverage denominator closes a loop, so §2 got the third list
+
+Added the same day, and it is the same rule rather than a new one: §2 already
+turned `resolution` into a **skip list** and `volatility` into a **re-check
+list**. Coverage makes the third — **the open list.** `R1 · 13 listed, 0
+opened` is the cheapest work a second pass can find: located already, never
+read. Before this, the only machine-readable frontier was the index, and the
+index has no entry for a subject that never became a topic — which is precisely
+how `nxdk_ntrc_dyndxt` was invisible to a hypothetical run 4 as well as to run
+3's reader.
+
+⇒ **Three edits total from the run 3 diagnosis** (§4 coverage, §7 gate,
+§2 open list), and the third is a two-line consequence of the first. **Do not
+count it as licence for a fourth.**
+
+### ⏸ Held for run 4: a checkpoint at **partition time**, not at depth
+
+Raised by the human: should the survey stop mid-traversal and ask whether to go
+deeper? **Probably not there** — the fan-out is parallel, so a mid-run pause
+serialises the expensive part, and §7 already argues the orchestrator knows
+least mid-run. The gate is at hand-over deliberately.
+
+🎯 **But the partition is chosen at a moment where a checkpoint is nearly
+free**, before any sub-agent is dispatched, and that is where run 3's damage was
+done: `hw/xbox` got one agent and `abaire's ecosystem` got two, because each is
+one noun. One message — *"12 subjects; `hw/xbox` covers nv2a + mcpx + machine
+def in a single record; split it?"* — is answerable from the direction alone.
+
+⚠ **Same confound as the splitting rule** (above): the brief mandated a
+combined `both` pass, so under-splitting and rationing are not yet separable.
+**Run 4 with the denominator in place decides both at once** — if a large area
+collapses into one record *again*, the partition needs a human at it and the
+checkpoint and the splitting rule fall out of one piece of evidence.
